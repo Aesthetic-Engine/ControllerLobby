@@ -1,11 +1,11 @@
 # ControllerLobby
 
-ControllerLobby makes local multiplayer easier in LaunchBox and BigBox. For
-supported MAME and RetroArch setups, choose player order before launching a
-game instead of changing controller assignments in emulator settings.
+ControllerLobby makes local multiplayer easier in LaunchBox and BigBox. 
 
-Press **Start** on each connected controller to join. Controllers are assigned
-in join order. When everyone is ready, Player 1 presses **Start** again to launch.
+1. Select a Retroarch or MAME title from your Launchbox/Bigbox library
+2. Connect usb controllers and pair wireless/bluetooth controllers you want to use
+3. Press **Start** on each controller you want to use. Players will be joined the moment they press Start and the first controller will be Player 1.
+4. When everyone is ready, Player 1 presses **Start** again to launch.
 
 This is **Beta 1**. Bugs, feedback and feature requests are welcome!
 
@@ -15,9 +15,9 @@ This is **Beta 1**. Bugs, feedback and feature requests are welcome!
 - An existing LaunchBox or BigBox installation with MAME or RetroArch configured.
 - Up to four controllers that Windows exposes through **XInput**, such as Xbox-compatible gamepads.
 - Emulator executables must be in subfolders inside your LaunchBox folder, with relative paths in the LaunchBox emulator entries (for example, `Emulators\MAME\mame.exe`). External emulator folders are not supported by Beta 1 setup.
-- Includes controller mappings designed for **MAME 0.279**. Other MAME versions have not been qualified for this beta.
+- Includes controller mappings designed for **MAME 0.279**. Other MAME versions should work but have not been qualified for this beta.
 
-Standalone emulators other than MAME/RetroArch, native PC games and DOSBox are
+Standalone emulators other than MAME/RetroArch, native PC games and DOSBox are planned for 1.0 but
 outside this beta. ControllerLobby does not require HidHide or a virtual-controller
 driver. No additional runtime software is needed; LaunchBox/BigBox and your
 emulator must already be installed.
@@ -46,6 +46,7 @@ Do not disable Windows security protections to install ControllerLobby.
 ## Questions
 
 **Will it overwrite my controller settings?**
+
 Mapped launches use separate session configuration rather than rewriting your
 original emulator controller configuration. Game saves use their normal
 locations. With existing-controls fallback, the emulator uses its normal
@@ -55,30 +56,34 @@ preserves unrelated edits. If conflicting changes prevent safe restoration,
 it stops with recovery information rather than overwriting them.
 
 **Can I use Xbox, PlayStation or Switch controllers?**
-The requirement is XInput support in Windows, not the logo on the controller.
+
+The requirement is XInput support in Windows.
 Xbox-compatible XInput gamepads fit that requirement. PlayStation and Switch
 controllers are not supported natively as DirectInput-only devices; they must
 already appear as XInput devices. Specific adapters or translation software
-have not been qualified by this beta.
+may allow Playstation and Switch controllers to work with ControllerLobby but they have not been qualified by this beta.
 
 **Does the lobby appear for single-player games?**
-Yes. It appears for games launched through the emulator entries selected during
-setup, not just multiplayer games. For solo play, join with one controller and
+
+Yes. It appears for all Retroarch and MAME games in your library, not just multiplayer games. This allows for players to choose their arcade stick for some games and a controller with analog sticks for others. For solo play, join with one controller and
 press Start again when ready.
 
 **Can I skip assignment or turn it off?**
+
 Choose **Use existing controls** in the lobby to launch without applying lobby
 join order. **Cancel** or **Esc** cancels the launch; it is not a skip button.
 To remove the integration, close LaunchBox/BigBox and emulators, then use
 **Uninstall** in Setup. Beta 1 does not provide a per-game disable switch.
 
 **What if my game cannot use lobby mapping?**
+
 The lobby displays a notice and proceeds using the game's existing controls,
 without applying join order, provided the launch safety checks pass. You can
 also choose **Use existing controls** yourself. A damaged or changed installation
 can refuse to launch and require Verify/Repair; fallback does not bypass those checks.
 
 **Do I need to recreate my LaunchBox setup?**
+
 For the supported folder layout above, no. Setup discovers existing MAME/RetroArch emulator entries. Select the entries
 you want to use; you do not need to recreate your games or emulator definitions.
 Ambiguous entries require an explicit choice. See the setup guide for supported
