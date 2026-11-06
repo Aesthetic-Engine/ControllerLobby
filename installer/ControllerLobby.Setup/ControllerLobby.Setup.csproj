@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType><TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF><Nullable>enable</Nullable><ImplicitUsings>enable</ImplicitUsings>
+    <StartupObject>ControllerLobby.Setup.Program</StartupObject><PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(InstallerPackageZip)' != ''">
+    <EmbeddedResource Include="$(InstallerPackageZip)" LogicalName="ControllerLobby.Package.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <AssemblyMetadata Include="EmbeddedPackageSha256" Value="$(InstallerPackageSha256)" />
+    <InternalsVisibleTo Include="SetupChecks" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Slices S6 to S8: the launch-transaction core (LAUNCH-TRANSACTION r4 and r5). The shim references it behind the
+       esc-only production policy (S7); internals are visible only to the offline checks. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <AssemblyName>ControllerLobby.Transaction</AssemblyName>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="ShimChecks" />
+    <InternalsVisibleTo Include="TransactionChecks" />
+  </ItemGroup>
+</Project>

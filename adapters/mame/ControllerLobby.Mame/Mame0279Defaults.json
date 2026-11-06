@@ -1,0 +1,7589 @@
+{
+  "Source": "https://github.com/mamedev/mame/blob/mame0279/src/emu/inpttype.ipp",
+  "SourceSha256": "cb1f3a925e89cff95c1b90337b5541085891e00321389d9c2adebb61207504c9",
+  "WindowsSource": "https://github.com/mamedev/mame/blob/mame0279/src/osd/modules/input/input_windows.cpp",
+  "WindowsSourceSha256": "2fb566c1131950a1b9f4f4a3ceaa41dfee322d7af115c6af81df3db50556df40",
+  "ObservedTypesSha256": "2952d40d15cc1ddc3ec28a9fe9b6b8f6a5acd3dd5ad27c4135469458f33e5d2b",
+  "Types": [
+    {
+      "Token": "P1_JOYSTICK_UP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_UP",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICK_DOWN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_DOWN",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICK_LEFT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LEFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICK_RIGHT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_RIGHT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICKRIGHT_UP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_I",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICKRIGHT_DOWN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_K",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICKRIGHT_LEFT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_J",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICKRIGHT_RIGHT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_L",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICKLEFT_UP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_E",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICKLEFT_DOWN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_D",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICKLEFT_LEFT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_S",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_JOYSTICKLEFT_RIGHT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON1",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LCONTROL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON2",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON3",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_SPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON4",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON5",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_Z",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON6",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_X",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON7",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_C",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON8",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_V",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON9",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_B",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON10",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_N",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON11",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_M",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON12",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_COMMA",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON13",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_STOP",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON14",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_SLASH",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON15",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_BUTTON16",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_START",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_1",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_SELECT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_5",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_A",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_A",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_B",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_B",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_C",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_C",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_D",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_D",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_E",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_E",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_F",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_G",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_G",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_H",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_H",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_I",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_I",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_J",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_J",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_K",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_K",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_L",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_L",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_M",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_M",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_N",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_N",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_O",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_O",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_P",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_COLON",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_Q",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_Q",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_KAN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LCONTROL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_PON",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_CHI",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_SPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_REACH",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_RON",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_Z",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_FLIP_FLOP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_Y",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_BET",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_SCORE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_RCONTROL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_DOUBLE_UP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_BIG",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_ENTER",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_SMALL",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_BACKSPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MAHJONG_LAST_CHANCE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_RALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_HANAFUDA_A",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_A",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_HANAFUDA_B",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_B",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_HANAFUDA_C",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_C",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_HANAFUDA_D",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_D",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_HANAFUDA_E",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_E",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_HANAFUDA_F",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_HANAFUDA_G",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_G",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_HANAFUDA_H",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_H",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_HANAFUDA_YES",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_M",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_HANAFUDA_NO",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_N",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_KEYIN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_Q",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_KEYOUT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_W",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_SERVICE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_9",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_BOOK",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_0",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_DOOR",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_O",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_PAYOUT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_BET",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_M",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_DEAL",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_STAND",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_L",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_TAKE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_G",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_D_UP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_D",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_HALF",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_HIGH",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_A",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_GAMBLE_LOW",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_S",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_POKER_HOLD1",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_Z",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_POKER_HOLD2",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_X",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_POKER_HOLD3",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_C",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_POKER_HOLD4",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_V",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_POKER_HOLD5",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_B",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_POKER_CANCEL",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_N",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_SLOT_STOP1",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_X",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_SLOT_STOP2",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_C",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_SLOT_STOP3",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_V",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_SLOT_STOP4",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_B",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_SLOT_STOP5",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_N",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_SLOT_STOP_ALL",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_Z",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICK_UP",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_R",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICK_DOWN",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICK_LEFT",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_D",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICK_RIGHT",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_G",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICKRIGHT_UP",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICKRIGHT_DOWN",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICKRIGHT_LEFT",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICKRIGHT_RIGHT",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICKLEFT_UP",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICKLEFT_DOWN",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICKLEFT_LEFT",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_JOYSTICKLEFT_RIGHT",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON1",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_A",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON2",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_S",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON3",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_Q",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON4",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_W",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON5",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_E",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON6",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON7",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON8",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON9",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON10",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON11",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON12",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON13",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON14",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON15",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_BUTTON16",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_START",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_SELECT",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_6",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_A",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_A",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_B",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_B",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_C",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_C",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_D",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_D",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_E",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_E",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_F",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_F",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_G",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_G",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_H",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_H",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_I",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_I",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_J",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_J",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_K",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_K",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_L",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_L",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_M",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_M",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_N",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_N",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_O",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_O",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_P",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_P",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_Q",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_Q",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_KAN",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_LCONTROL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_PON",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_CHI",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_SPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_REACH",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_LSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_RON",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_Z",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_FLIP_FLOP",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_Y",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_BET",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_3",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_SCORE",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_RCONTROL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_DOUBLE_UP",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_BIG",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_ENTER",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_SMALL",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_BACKSPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_MAHJONG_LAST_CHANCE",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_RALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_HANAFUDA_A",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_A",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_HANAFUDA_B",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_B",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_HANAFUDA_C",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_C",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_HANAFUDA_D",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_D",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_HANAFUDA_E",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_E",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_HANAFUDA_F",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_F",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_HANAFUDA_G",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_G",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_HANAFUDA_H",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_H",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_HANAFUDA_YES",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_M",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_HANAFUDA_NO",
+      "Player": 1,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2_N",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICK_UP",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_I",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICK_DOWN",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_K",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICK_LEFT",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_J",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICK_RIGHT",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_L",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICKRIGHT_UP",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICKRIGHT_DOWN",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICKRIGHT_LEFT",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICKRIGHT_RIGHT",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICKLEFT_UP",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICKLEFT_DOWN",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICKLEFT_LEFT",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_JOYSTICKLEFT_RIGHT",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON1",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_RCONTROL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON2",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON3",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_ENTER",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON4",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON5",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON6",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON7",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON8",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON9",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON10",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON11",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON12",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON13",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON14",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON15",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_BUTTON16",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_START",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_SELECT",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_7",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_A",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_A",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_B",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_B",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_C",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_C",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_D",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_D",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_E",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_E",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_F",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_F",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_G",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_G",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_H",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_H",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_I",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_I",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_J",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_J",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_K",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_K",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_L",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_L",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_M",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_M",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_N",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_N",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_O",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_O",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_P",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_COLON",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_Q",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_Q",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_KAN",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_LCONTROL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_PON",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_CHI",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_SPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_REACH",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_LSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_RON",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_Z",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_FLIP_FLOP",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_Y",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_BET",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_3",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_SCORE",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_RCONTROL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_DOUBLE_UP",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_BIG",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_ENTER",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_SMALL",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_BACKSPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_MAHJONG_LAST_CHANCE",
+      "Player": 2,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3_RALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICK_UP",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_8PAD",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICK_DOWN",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2PAD",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICK_LEFT",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4PAD",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICK_RIGHT",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_6PAD",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICKRIGHT_UP",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICKRIGHT_DOWN",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICKRIGHT_LEFT",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICKRIGHT_RIGHT",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICKLEFT_UP",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICKLEFT_DOWN",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICKLEFT_LEFT",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_JOYSTICKLEFT_RIGHT",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON1",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_0PAD",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON2",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_DELPAD",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON3",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_ENTERPAD",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON4",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON5",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON6",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON7",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON8",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON9",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON10",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON11",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON12",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON13",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON14",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON15",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_BUTTON16",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_START",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_SELECT",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_8",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_A",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_A",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_B",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_B",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_C",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_C",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_D",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_D",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_E",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_E",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_F",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_F",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_G",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_G",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_H",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_H",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_I",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_I",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_J",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_J",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_K",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_K",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_L",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_L",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_M",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_M",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_N",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_N",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_O",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_O",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_P",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_COLON",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_Q",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_Q",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_KAN",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_LCONTROL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_PON",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_CHI",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_SPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_REACH",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_LSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_RON",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_Z",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_FLIP_FLOP",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_Y",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_BET",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_3",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_SCORE",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_RCONTROL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_DOUBLE_UP",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_BIG",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_ENTER",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_SMALL",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_BACKSPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_MAHJONG_LAST_CHANCE",
+      "Player": 3,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4_RALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICK_UP",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICK_DOWN",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICK_LEFT",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICK_RIGHT",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICKRIGHT_UP",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICKRIGHT_DOWN",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICKRIGHT_LEFT",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICKRIGHT_RIGHT",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICKLEFT_UP",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICKLEFT_DOWN",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICKLEFT_LEFT",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_JOYSTICKLEFT_RIGHT",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON1",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON2",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON3",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON4",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON5",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON6",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON7",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON8",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON9",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON10",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON11",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON12",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON13",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON14",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON15",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_BUTTON16",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_START",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_SELECT",
+      "Player": 4,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICK_UP",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICK_DOWN",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICK_LEFT",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICK_RIGHT",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICKRIGHT_UP",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICKRIGHT_DOWN",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICKRIGHT_LEFT",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICKRIGHT_RIGHT",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICKLEFT_UP",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICKLEFT_DOWN",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICKLEFT_LEFT",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_JOYSTICKLEFT_RIGHT",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON1",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON2",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON3",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON4",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON5",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON6",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON7",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON8",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON9",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON10",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON11",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON12",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON13",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON14",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON15",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_BUTTON16",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_START",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_SELECT",
+      "Player": 5,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICK_UP",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICK_DOWN",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICK_LEFT",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICK_RIGHT",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICKRIGHT_UP",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICKRIGHT_DOWN",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICKRIGHT_LEFT",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICKRIGHT_RIGHT",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICKLEFT_UP",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICKLEFT_DOWN",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICKLEFT_LEFT",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_JOYSTICKLEFT_RIGHT",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON1",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON2",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON3",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON4",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON5",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON6",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON7",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON8",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON9",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON10",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON11",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON12",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON13",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON14",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON15",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_BUTTON16",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_START",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_SELECT",
+      "Player": 6,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICK_UP",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICK_DOWN",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICK_LEFT",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICK_RIGHT",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICKRIGHT_UP",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICKRIGHT_DOWN",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICKRIGHT_LEFT",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICKRIGHT_RIGHT",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICKLEFT_UP",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICKLEFT_DOWN",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICKLEFT_LEFT",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_JOYSTICKLEFT_RIGHT",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON1",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON2",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON3",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON4",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON5",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON6",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON7",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON8",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON9",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON10",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON11",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON12",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON13",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON14",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON15",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_BUTTON16",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_START",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_SELECT",
+      "Player": 7,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICK_UP",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICK_DOWN",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICK_LEFT",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICK_RIGHT",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICKRIGHT_UP",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICKRIGHT_DOWN",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICKRIGHT_LEFT",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICKRIGHT_RIGHT",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICKLEFT_UP",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICKLEFT_DOWN",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICKLEFT_LEFT",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_JOYSTICKLEFT_RIGHT",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON1",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON2",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON3",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON4",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON5",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON6",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON7",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON8",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON9",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON10",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON11",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON12",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON13",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON14",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON15",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_BUTTON16",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_START",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_SELECT",
+      "Player": 8,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICK_UP",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICK_DOWN",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICK_LEFT",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICK_RIGHT",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICKRIGHT_UP",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICKRIGHT_DOWN",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICKRIGHT_LEFT",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICKRIGHT_RIGHT",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICKLEFT_UP",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICKLEFT_DOWN",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICKLEFT_LEFT",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_JOYSTICKLEFT_RIGHT",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON1",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON2",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON3",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON4",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON5",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON6",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON7",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON8",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON9",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON10",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON11",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON12",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON13",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON14",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON15",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_BUTTON16",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_START",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_SELECT",
+      "Player": 9,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "START1",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_1",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "START2",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_2",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "START3",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_3",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "START4",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_4",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "START5",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "START6",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "START7",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "START8",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN1",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_5",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN2",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_6",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN3",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_7",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN4",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_8",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN5",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN6",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN7",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN8",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN9",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN10",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN11",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "COIN12",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "BILL1",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_BACKSPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "SERVICE1",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_9",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "SERVICE2",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_0",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "SERVICE3",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_MINUS",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "SERVICE4",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_EQUALS",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "TILT1",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_T",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "TILT2",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "TILT3",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "TILT4",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "POWER_ON",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F1",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "POWER_OFF",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F2",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "SERVICE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F2",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "TILT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_T",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "INTERLOCK",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "MEMORY_RESET",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F1",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "VOLUME_DOWN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_MINUS",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "VOLUME_UP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_EQUALS",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_PEDAL",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_LCONTROL",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_PEDAL",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_A",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_PEDAL",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_RCONTROL",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_PEDAL",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_0PAD",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_PEDAL",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_PEDAL",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_PEDAL",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_PEDAL",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_PEDAL",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_PEDAL",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_PEDAL2",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_LALT",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_PEDAL2",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_S",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_PEDAL2",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_RSHIFT",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_PEDAL2",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_DELPAD",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_PEDAL2",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_PEDAL2",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_PEDAL2",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_PEDAL2",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_PEDAL2",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_PEDAL2",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_PEDAL3",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_SPACE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P2_PEDAL3",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_Q",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_PEDAL3",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_ENTER",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_PEDAL3",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_ENTERPAD",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_PEDAL3",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_PEDAL3",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_PEDAL3",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_PEDAL3",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_PEDAL3",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_PEDAL3",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_PADDLE",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_RIGHT",
+        "KEYCODE_LEFT"
+      ]
+    },
+    {
+      "Token": "P2_PADDLE",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_G",
+        "KEYCODE_D"
+      ]
+    },
+    {
+      "Token": "P3_PADDLE",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_L",
+        "KEYCODE_J"
+      ]
+    },
+    {
+      "Token": "P4_PADDLE",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_PADDLE",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_PADDLE",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_PADDLE",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_PADDLE",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_PADDLE",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_PADDLE",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_PADDLE_V",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_DOWN",
+        "KEYCODE_UP"
+      ]
+    },
+    {
+      "Token": "P2_PADDLE_V",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_F",
+        "KEYCODE_R"
+      ]
+    },
+    {
+      "Token": "P3_PADDLE_V",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_K",
+        "KEYCODE_I"
+      ]
+    },
+    {
+      "Token": "P4_PADDLE_V",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_PADDLE_V",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_PADDLE_V",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_PADDLE_V",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_PADDLE_V",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_PADDLE_V",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_PADDLE_V",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_POSITIONAL",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_RIGHT",
+        "KEYCODE_LEFT"
+      ]
+    },
+    {
+      "Token": "P2_POSITIONAL",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_G",
+        "KEYCODE_D"
+      ]
+    },
+    {
+      "Token": "P3_POSITIONAL",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_L",
+        "KEYCODE_J"
+      ]
+    },
+    {
+      "Token": "P4_POSITIONAL",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_POSITIONAL",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_POSITIONAL",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_POSITIONAL",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_POSITIONAL",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_POSITIONAL",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_POSITIONAL",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_POSITIONAL_V",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_DOWN",
+        "KEYCODE_UP"
+      ]
+    },
+    {
+      "Token": "P2_POSITIONAL_V",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_F",
+        "KEYCODE_R"
+      ]
+    },
+    {
+      "Token": "P3_POSITIONAL_V",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_K",
+        "KEYCODE_I"
+      ]
+    },
+    {
+      "Token": "P4_POSITIONAL_V",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_POSITIONAL_V",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_POSITIONAL_V",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_POSITIONAL_V",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_POSITIONAL_V",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_POSITIONAL_V",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_POSITIONAL_V",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_DIAL",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_RIGHT",
+        "KEYCODE_LEFT"
+      ]
+    },
+    {
+      "Token": "P2_DIAL",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_G",
+        "KEYCODE_D"
+      ]
+    },
+    {
+      "Token": "P3_DIAL",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_L",
+        "KEYCODE_J"
+      ]
+    },
+    {
+      "Token": "P4_DIAL",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_DIAL",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_DIAL",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_DIAL",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_DIAL",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_DIAL",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_DIAL",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_DIAL_V",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_DOWN",
+        "KEYCODE_UP"
+      ]
+    },
+    {
+      "Token": "P2_DIAL_V",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_F",
+        "KEYCODE_R"
+      ]
+    },
+    {
+      "Token": "P3_DIAL_V",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_K",
+        "KEYCODE_I"
+      ]
+    },
+    {
+      "Token": "P4_DIAL_V",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_DIAL_V",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_DIAL_V",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_DIAL_V",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_DIAL_V",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_DIAL_V",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_DIAL_V",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_TRACKBALL_X",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_RIGHT",
+        "KEYCODE_LEFT"
+      ]
+    },
+    {
+      "Token": "P2_TRACKBALL_X",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_G",
+        "KEYCODE_D"
+      ]
+    },
+    {
+      "Token": "P3_TRACKBALL_X",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_L",
+        "KEYCODE_J"
+      ]
+    },
+    {
+      "Token": "P4_TRACKBALL_X",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_TRACKBALL_X",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_TRACKBALL_X",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_TRACKBALL_X",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_TRACKBALL_X",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_TRACKBALL_X",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_TRACKBALL_X",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_TRACKBALL_Y",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_DOWN",
+        "KEYCODE_UP"
+      ]
+    },
+    {
+      "Token": "P2_TRACKBALL_Y",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_F",
+        "KEYCODE_R"
+      ]
+    },
+    {
+      "Token": "P3_TRACKBALL_Y",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_K",
+        "KEYCODE_I"
+      ]
+    },
+    {
+      "Token": "P4_TRACKBALL_Y",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_TRACKBALL_Y",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_TRACKBALL_Y",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_TRACKBALL_Y",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_TRACKBALL_Y",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_TRACKBALL_Y",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_TRACKBALL_Y",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_AD_STICK_X",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_RIGHT",
+        "KEYCODE_LEFT"
+      ]
+    },
+    {
+      "Token": "P2_AD_STICK_X",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_G",
+        "KEYCODE_D"
+      ]
+    },
+    {
+      "Token": "P3_AD_STICK_X",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_L",
+        "KEYCODE_J"
+      ]
+    },
+    {
+      "Token": "P4_AD_STICK_X",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_AD_STICK_X",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_AD_STICK_X",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_AD_STICK_X",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_AD_STICK_X",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_AD_STICK_X",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_AD_STICK_X",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_AD_STICK_Y",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_DOWN",
+        "KEYCODE_UP"
+      ]
+    },
+    {
+      "Token": "P2_AD_STICK_Y",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_F",
+        "KEYCODE_R"
+      ]
+    },
+    {
+      "Token": "P3_AD_STICK_Y",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_K",
+        "KEYCODE_I"
+      ]
+    },
+    {
+      "Token": "P4_AD_STICK_Y",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_AD_STICK_Y",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_AD_STICK_Y",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_AD_STICK_Y",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_AD_STICK_Y",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_AD_STICK_Y",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_AD_STICK_Y",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_AD_STICK_Z",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_Z",
+        "KEYCODE_A"
+      ]
+    },
+    {
+      "Token": "P2_AD_STICK_Z",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P3_AD_STICK_Z",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P4_AD_STICK_Z",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_AD_STICK_Z",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_AD_STICK_Z",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_AD_STICK_Z",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_AD_STICK_Z",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_AD_STICK_Z",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_AD_STICK_Z",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_LIGHTGUN_X",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_RIGHT",
+        "KEYCODE_LEFT"
+      ]
+    },
+    {
+      "Token": "P2_LIGHTGUN_X",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_G",
+        "KEYCODE_D"
+      ]
+    },
+    {
+      "Token": "P3_LIGHTGUN_X",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_L",
+        "KEYCODE_J"
+      ]
+    },
+    {
+      "Token": "P4_LIGHTGUN_X",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_LIGHTGUN_X",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_LIGHTGUN_X",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_LIGHTGUN_X",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_LIGHTGUN_X",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_LIGHTGUN_X",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_LIGHTGUN_X",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_LIGHTGUN_Y",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_DOWN",
+        "KEYCODE_UP"
+      ]
+    },
+    {
+      "Token": "P2_LIGHTGUN_Y",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_F",
+        "KEYCODE_R"
+      ]
+    },
+    {
+      "Token": "P3_LIGHTGUN_Y",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_K",
+        "KEYCODE_I"
+      ]
+    },
+    {
+      "Token": "P4_LIGHTGUN_Y",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_LIGHTGUN_Y",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_LIGHTGUN_Y",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_LIGHTGUN_Y",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_LIGHTGUN_Y",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_LIGHTGUN_Y",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_LIGHTGUN_Y",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MOUSE_X",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_RIGHT",
+        "KEYCODE_LEFT"
+      ]
+    },
+    {
+      "Token": "P2_MOUSE_X",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_G",
+        "KEYCODE_D"
+      ]
+    },
+    {
+      "Token": "P3_MOUSE_X",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_L",
+        "KEYCODE_J"
+      ]
+    },
+    {
+      "Token": "P4_MOUSE_X",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_MOUSE_X",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_MOUSE_X",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_MOUSE_X",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_MOUSE_X",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_MOUSE_X",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_MOUSE_X",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P1_MOUSE_Y",
+      "Player": 0,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_DOWN",
+        "KEYCODE_UP"
+      ]
+    },
+    {
+      "Token": "P2_MOUSE_Y",
+      "Player": 1,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_F",
+        "KEYCODE_R"
+      ]
+    },
+    {
+      "Token": "P3_MOUSE_Y",
+      "Player": 2,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "KEYCODE_K",
+        "KEYCODE_I"
+      ]
+    },
+    {
+      "Token": "P4_MOUSE_Y",
+      "Player": 3,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P5_MOUSE_Y",
+      "Player": 4,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P6_MOUSE_Y",
+      "Player": 5,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P7_MOUSE_Y",
+      "Player": 6,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P8_MOUSE_Y",
+      "Player": 7,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P9_MOUSE_Y",
+      "Player": 8,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "P10_MOUSE_Y",
+      "Player": 9,
+      "Analog": true,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "KEYPAD",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "KEYBOARD",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_MENU",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_TAB NOT KEYCODE_LALT NOT KEYCODE_RALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_SELECT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_ENTER NOT KEYCODE_LALT NOT KEYCODE_RALT OR KEYCODE_ENTERPAD",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_BACK",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_ESC",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_CANCEL",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_ESC",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_CLEAR",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_DEL",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_HELP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F1",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_UP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_UP",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_DOWN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_DOWN",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_LEFT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LEFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_RIGHT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_RIGHT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_HOME",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_HOME",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_END",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_END",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_PAGE_UP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_PGUP",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_PAGE_DOWN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_PGDN",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_PREV_GROUP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_OPENBRACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_NEXT_GROUP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_CLOSEBRACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_ON_SCREEN_DISPLAY",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_TILDE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_TOGGLE_UI",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_SCRLOCK NOT KEYCODE_LSHIFT NOT KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_DEBUG_BREAK",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_TILDE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_PAUSE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F5 NOT KEYCODE_LSHIFT NOT KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_PAUSE_SINGLE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F5 KEYCODE_LSHIFT OR KEYCODE_F5 KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_REWIND_SINGLE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F4 KEYCODE_LSHIFT OR KEYCODE_F4 KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_SAVE_STATE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F6 NOT KEYCODE_LSHIFT NOT KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_SAVE_STATE_QUICK",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F6 KEYCODE_LSHIFT OR KEYCODE_F6 KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_LOAD_STATE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F7 NOT KEYCODE_LSHIFT NOT KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_LOAD_STATE_QUICK",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F7 KEYCODE_LSHIFT OR KEYCODE_F7 KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_RESET_MACHINE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F3 KEYCODE_LSHIFT OR KEYCODE_F3 KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_SOFT_RESET",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F3 NOT KEYCODE_LSHIFT NOT KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_SHOW_GFX",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F4 NOT KEYCODE_LSHIFT NOT KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_FRAMESKIP_DEC",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F8 NOT KEYCODE_LSHIFT NOT KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_FRAMESKIP_INC",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F9",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_THROTTLE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F10 NOT KEYCODE_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_FAST_FORWARD",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_INSERT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_SHOW_FPS",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F11 NOT KEYCODE_LSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_SNAPSHOT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F12 NOT KEYCODE_LSHIFT NOT KEYCODE_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_RECORD_MNG",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F12 KEYCODE_LSHIFT NOT KEYCODE_LCONTROL NOT KEYCODE_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_RECORD_AVI",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F12 KEYCODE_LSHIFT KEYCODE_LCONTROL NOT KEYCODE_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_TOGGLE_CHEAT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F8 KEYCODE_LSHIFT OR KEYCODE_F8 KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_DISPLAY_COMMENT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_SPACE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_ZOOM_IN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_EQUALS",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_ZOOM_OUT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_MINUS",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_ZOOM_DEFAULT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_0",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_ROTATE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_R",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_SHOW_PROFILER",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F11 KEYCODE_LSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_RELEASE_POINTER",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_RCONTROL KEYCODE_RALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_PASTE",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_SCRLOCK KEYCODE_LSHIFT OR KEYCODE_SCRLOCK KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_TAPE_START",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F2 NOT KEYCODE_LSHIFT NOT KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_TAPE_STOP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F2 KEYCODE_LSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_FOCUS_NEXT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_TAB NOT KEYCODE_LSHIFT NOT KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_FOCUS_PREV",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_TAB KEYCODE_LSHIFT OR KEYCODE_TAB KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_DATS",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LALT KEYCODE_D",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_FAVORITES",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LALT KEYCODE_F",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_EXPORT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_LALT KEYCODE_E",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UI_AUDIT",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F1 NOT KEYCODE_LSHIFT NOT KEYCODE_RSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "TOGGLE_FULLSCREEN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_ENTER KEYCODE_LALT OR KEYCODE_ENTER KEYCODE_RALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "RENDER_SNAP",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F12 KEYCODE_LALT NOT KEYCODE_LSHIFT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "RENDER_AVI",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F12 KEYCODE_LSHIFT KEYCODE_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "POST_PROCESS",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "KEYCODE_F10 KEYCODE_LALT",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_5",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_6",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_7",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_8",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_9",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_10",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_11",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_12",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_13",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_14",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_15",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OSD_16",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UNKNOWN",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "UNUSED",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "SPECIAL",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "OTHER",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "ADJUSTER",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "DIPSWITCH",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    },
+    {
+      "Token": "CONFIG",
+      "Player": 0,
+      "Analog": false,
+      "Keyboard": [
+        "NONE",
+        "NONE",
+        "NONE"
+      ]
+    }
+  ]
+}

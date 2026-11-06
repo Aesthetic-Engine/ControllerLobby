@@ -1,0 +1,9 @@
+**/bin/
+**/obj/
+**/__pycache__/
+*.pyc
+dist/
+artifacts/
+tmp/
+.dotnet-home/
+.vs/

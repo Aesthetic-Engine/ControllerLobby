@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><Nullable>enable</Nullable><ImplicitUsings>enable</ImplicitUsings><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../adapters/retroarch/ControllerLobby.RetroArch/ControllerLobby.RetroArch.csproj" />
+    <ProjectReference Include="../ControllerLobby.DirectIndex.Selection/ControllerLobby.DirectIndex.Selection.csproj" />
+  </ItemGroup>
+</Project>

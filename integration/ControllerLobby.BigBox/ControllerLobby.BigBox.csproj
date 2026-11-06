@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>WinExe</OutputType><TargetFramework>net10.0-windows</TargetFramework><UseWPF>true</UseWPF><Nullable>annotations</Nullable><ImplicitUsings>enable</ImplicitUsings><StartupObject>ControllerLobby.BigBox.Program</StartupObject><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../experiment/ControllerLobby.MameTrial.HostCore/ControllerLobby.MameTrial.HostCore.csproj" />
+    <ProjectReference Include="../../plugin/lobbylink/ControllerLobby.LobbyLink.csproj" />
+    <ProjectReference Include="../../helper/ControllerLobby.Lobby/ControllerLobby.Lobby.csproj" />
+    <Compile Include="../../helper/ControllerLobby.Lobby.Windows/LobbyView.cs" Link="ControllerDrawing.cs" />
+    <Compile Include="../../experiment/ControllerLobby.DirectIndex.Windows/Program.cs" Link="GoldenEyeWindow.cs" />
+    <Compile Include="../../experiment/ControllerLobby.MameTrial.Windows/Program.cs" Link="MameWindow.cs" />
+    <Compile Include="../../shim/ControllerLobby.Shim/*.cs" Exclude="../../shim/ControllerLobby.Shim/Program.cs" Link="Shim/%(Filename)%(Extension)" />
+  </ItemGroup>
+<ItemGroup><InternalsVisibleTo Include="BigBoxWindowChecks" /></ItemGroup><ItemGroup><InternalsVisibleTo Include="NormalPlayChecks" /></ItemGroup></Project>
