@@ -1,6 +1,6 @@
 # Third-Party Software Notices and Licenses
 
-ControllerLobby Beta 1 distributes the following third-party runtimes and libraries as part of its self-contained Windows (`win-x64`) installer and runtime package. Full license texts and upstream third-party notices are included in the `notices/` directory of the distribution:
+ControllerLobby distributes the following third-party runtimes and libraries as part of its self-contained Windows (`win-x64`) installer and runtime package. Full license texts and upstream third-party notices are included in the `notices/` directory of the distribution:
 
 Original ControllerLobby code is covered by the root `LICENSE` (MIT).
 `Mame0279Defaults.json` derives from pinned MAME 0.279 BSD-3-Clause files by
@@ -59,3 +59,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## 3. Simple DirectMedia Layer (SDL3) 3.4.18 (`win32-x64`)
+
+- **Component:** `SDL3.dll` from the official release `SDL3-3.4.18-win32-x64.zip` (archive SHA-256 `75C2C0FC74E7D1206AAEDC22893A35887332F4F85F5C8B74FDDC10D177985F2C`), unmodified.
+- **Use:** reads the connected controllers' SDL GUIDs and instance IDs for Xbox (Xemu) launches.
+- **Location in Package:** `payload/SDL3.dll`
+- **License:** zlib License, in `notices/SDL3_LICENSE.txt`.

@@ -7,8 +7,18 @@ spec.loader.exec_module(installer)
 
 def inspect(root):
     installer.tx.xml_path_for_root(root)
-    if (Path(root)/installer.SETUP_DIR_NAME/'active-plan.json').is_file():
-        return {'Installed':True,'Entries':[]}
+    plan=Path(root)/installer.SETUP_DIR_NAME/'active-plan.json'
+    if plan.is_file():
+        # Report which package and emulator entries are installed, so a newer Setup can offer an upgrade
+        # that keeps the same emulator choices. Read-only; an unreadable plan reports no pin.
+        pin,ids='',[]
+        try:
+            active=json.loads(plan.read_bytes())
+            pin=str(active.get('PackageSha256','')).upper()
+            ids=[str(e['Id']) for e in active.get('Entries',[]) if isinstance(e,dict) and 'Id' in e]
+        except (OSError,ValueError,TypeError,KeyError):
+            pass
+        return {'Installed':True,'Entries':[],'InstalledPackagePin':pin,'InstalledEntryIds':ids}
     _,_,records=installer.parse_emulators_xml(root)
     entries=[]
     for record in records:
@@ -21,7 +31,11 @@ def inspect(root):
             reason=str(error)
         entries.append({key:record[key] for key in ('Id','Title','Kind','ApplicationPath')}|
                        {'Eligible':not reason,'Reason':reason})
-    return {'Installed':False,'Entries':entries}
+    # Without an active plan, any file left in ControllerLobby.Setup (a kept record, preimages, files) is install
+    # state that a failed rollback left behind; a completed removal or full rollback leaves no such folder.
+    setup=Path(root)/installer.SETUP_DIR_NAME
+    pending=setup.is_dir() and any(p.is_file() or p.is_symlink() for p in setup.rglob('*'))
+    return {'Installed':False,'Entries':entries,'RecoveryPending':pending}
 
 if __name__=='__main__':
     try:

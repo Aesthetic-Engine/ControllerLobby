@@ -1,5 +1,5 @@
-"""Portable Beta 1 BigBox installer and recovery adapter for the shim transaction.
-Supports Schema 1 (legacy synthetic two-entry fixtures) and Schema 2 (portable Beta 1
+"""Portable BigBox installer and recovery adapter for the shim transaction.
+Supports Schema 1 (legacy synthetic two-entry fixtures) and Schema 2 (portable
 discovery, install-time manifest generation, XInput reader provider probe, persistent
 ControllerLobby.Setup management copy, explicit repair, and post-update uninstall).
 """
@@ -17,7 +17,60 @@ ALLOWED_IDS=(
     "11111111-1111-4111-8111-111111111111",
     "22222222-2222-4222-8222-222222222222",
 )
-ALLOWED_KINDS=("retroarch","mame")
+ALLOWED_KINDS=("retroarch","mame","duckstation","xemu","pcsx2")
+SUPPORTED_TEXT="only RetroArch, MAME, DuckStation, Xemu and PCSX2 are supported"
+DUCKSTATION_EXE="duckstation-qt-x64-releaseltcg.exe"
+DUCKSTATION_COPY="DuckStationCopy"
+# Files ControllerLobby or DuckStation write inside the launch copy after install (contract r6 section 2).
+DUCKSTATION_GENERATED=("settings.ini","playtime.dat","duckstation.log")
+
+
+def duckstation_program_files(emulator_dir):
+    """The launch copy's program inventory: an explicit allow-list of the emulator folder, never the folder itself.
+    Same rule as DuckStationSession.IsProgramFile. Returns sorted (relative path, absolute source) pairs."""
+    base=Path(emulator_dir);out=[]
+    for p in base.iterdir():
+        if p.is_symlink() or getattr(os.lstat(p),"st_file_attributes",0)&0x400:raise tx.Refused("Reparse point in DuckStation folder: "+str(p))
+        n=p.name.lower()
+        if p.is_file() and (n==DUCKSTATION_EXE or n.endswith(".dll") or n in ("qt.conf","license.txt")):out.append((p.name,str(p)))
+        elif p.is_dir() and n in ("qtplugins","resources","translations"):
+            for directory,dirs,files in os.walk(p,followlinks=False):
+                for entry in dirs+files:
+                    ep=Path(directory)/entry
+                    if ep.is_symlink() or getattr(os.lstat(ep),"st_file_attributes",0)&0x400:raise tx.Refused("Reparse point in DuckStation folder: "+str(ep))
+                for f in files:
+                    fp=Path(directory)/f
+                    out.append((str(fp.relative_to(base)),str(fp)))
+    if not any(rel.lower()==DUCKSTATION_EXE for rel,_ in out):raise tx.Refused("DuckStation program missing from its folder")
+    return sorted(out,key=lambda x:x[0].lower())
+PCSX2_EXE="pcsx2-qt.exe"
+PCSX2_COPY="Pcsx2Copy"
+
+
+def pcsx2_inventory():
+    spec_=importlib.util.spec_from_file_location("pcsx2_inventory",HERE/"pcsx2_inventory.py")
+    module=importlib.util.module_from_spec(spec_);spec_.loader.exec_module(module)
+    return module
+
+
+def pcsx2_program_files(emulator_dir):
+    """The PCSX2 launch copy (PCSX2 adapter contract 2.1): exactly the official 2.7.182 release
+    inventory, each file copied only when the owner's file is a plain file equal to the release's. Returns sorted
+    (relative path, absolute source, sha) triples. Anything missing, different or behind a link refuses."""
+    base=Path(emulator_dir);inv=pcsx2_inventory();out=[]
+    if not (base/"portable.ini").is_file():  # guard:pcsx2-portable-required
+        raise tx.Refused("PCSX2 must be a portable install (portable.ini beside pcsx2-qt.exe); ControllerLobby supports portable PCSX2 only")
+    for rel,expected in sorted(inv.FILES.items(),key=lambda kv:kv[0].lower()):
+        p=base/rel
+        for part in (p,*p.parents):
+            if part==base:break
+            if part.is_symlink() or (part.exists() and getattr(os.lstat(part),"st_file_attributes",0)&0x400):raise tx.Refused("Reparse point in PCSX2 folder: "+str(part))
+        if not p.is_file():raise tx.Refused("PCSX2 program file missing: "+rel+"; ControllerLobby supports the official PCSX2 2.7.182 release")
+        h=tx.sha(str(p))
+        if h.upper()!=expected:  # guard:pcsx2-release-hash
+            raise tx.Refused("PCSX2 program file differs from the official 2.7.182 release: "+rel)
+        out.append((rel,str(p),h))
+    return out
 SETUP_DIR_NAME="ControllerLobby.Setup"
 
 
@@ -95,6 +148,9 @@ def parse_emulators_xml(root):
         folder=os.path.dirname(norm_app)
         if exe_name=="retroarch.exe":kind="retroarch"
         elif exe_name in ("mame.exe","mame64.exe"):kind="mame"
+        elif exe_name==DUCKSTATION_EXE:kind="duckstation"
+        elif exe_name==PCSX2_EXE:kind="pcsx2"
+        elif exe_name=="xemu.exe":kind="xemu"
         elif "shim" in exe_name or "controllerlobby" in exe_name or any(k in title.lower() for k in ("retroarch","mame")):kind="wrapper"
         else:kind="excluded"
         records.append({"Id":eid,"Title":title,"ApplicationPath":norm_app,"Folder":folder,"OriginalExe":os.path.basename(norm_app),"Kind":kind})
@@ -122,7 +178,7 @@ def discover_entries(root,selected_ids=None):
             if r["Id"] in seen_chosen_ids:raise tx.Refused("Duplicate emulator entry selected: "+r["Id"])
             seen_chosen_ids.add(r["Id"])
             if r["Kind"]=="wrapper":raise tx.Refused("Emulator entry "+r["Id"]+" points to wrapper/non-standard executable: "+r["ApplicationPath"])
-            if r["Kind"] not in ALLOWED_KINDS:raise tx.Refused("Emulator entry "+r["Id"]+" ("+r["Title"]+") is excluded from Beta 1; only retroarch and mame are supported")
+            if r["Kind"] not in ALLOWED_KINDS:raise tx.Refused("Emulator entry "+r["Id"]+" ("+r["Title"]+") is not supported; "+SUPPORTED_TEXT)
             chosen.append(r)
     else:
         wrappers=[r for r in records if r["Kind"]=="wrapper"]
@@ -143,7 +199,7 @@ def discover_entries(root,selected_ids=None):
             for k in ALLOWED_KINDS:
                 if len(by_kind[k])>1:raise tx.Refused("Ambiguous "+k+" entries in Emulators.xml; pass --entries <ID> explicitly")
             chosen=[items[0] for k in ALLOWED_KINDS for items in [by_kind[k]] if items]
-    if not chosen:raise tx.Refused("No eligible RetroArch or MAME entries found in Emulators.xml")
+    if not chosen:raise tx.Refused("No eligible RetroArch, MAME, DuckStation, Xemu or PCSX2 entries found in Emulators.xml")
     seen_folders=set()
     for r in chosen:
         if not r["Folder"]:raise tx.Refused("Emulator entry "+r["Id"]+" must reside in a subfolder under LaunchBox root")
@@ -155,6 +211,21 @@ def discover_entries(root,selected_ids=None):
         seen_folders.add(fc)
         r["ExecutablePath"]=exe_abs
         r["ExecutableSha256"]=tx.sha(exe_abs)
+        if r["Kind"]=="duckstation":
+            # Data kept in the emulator folder (portable mode) could share names with program folders; not supported.
+            folder_abs=os.path.dirname(exe_abs)
+            if any(os.path.exists(os.path.join(folder_abs,n)) for n in ("portable.txt","settings.ini")):  # guard:duckstation-portable-refused
+                raise tx.Refused("DuckStation entry "+r["Id"]+" keeps its settings in its program folder (portable mode); ControllerLobby supports DuckStation with its settings in Documents only")
+            if os.path.exists(os.path.join(folder_abs,"ControllerLobby.BigBox",DUCKSTATION_COPY)):
+                raise tx.Refused("A DuckStation launch copy already exists: "+os.path.join(folder_abs,"ControllerLobby.BigBox",DUCKSTATION_COPY))
+            r["DuckStationFiles"]=duckstation_program_files(folder_abs)
+        if r["Kind"]=="pcsx2":
+            folder_abs=os.path.dirname(exe_abs)
+            if r["ExecutableSha256"].upper()!=pcsx2_inventory().PIN:  # guard:pcsx2-exe-pin
+                raise tx.Refused("PCSX2 entry "+r["Id"]+" is not PCSX2 2.7.182; ControllerLobby supports that release only")
+            if os.path.exists(os.path.join(folder_abs,"ControllerLobby.BigBox",PCSX2_COPY)):
+                raise tx.Refused("A PCSX2 launch copy already exists: "+os.path.join(folder_abs,"ControllerLobby.BigBox",PCSX2_COPY))
+            r["Pcsx2Files"]=pcsx2_program_files(folder_abs)
     return xml_path,raw,chosen,records
 
 
@@ -188,7 +259,7 @@ def run_verify_only(exe_path):
     if tx.sha_bytes(n_raw)!=b_cfg.get("ManifestSha256"):raise RuntimeError("bigbox.json ManifestSha256 mismatch")
 
 
-def generate_entry_manifests(kind,exe_path,exe_sha,reader_info,payload_files):
+def generate_entry_manifests(kind,exe_path,exe_sha,reader_info,payload_files,duckstation=None,pcsx2=None):
     normal_obj={
         "Schema":1,
         "Kind":kind,
@@ -201,6 +272,12 @@ def generate_entry_manifests(kind,exe_path,exe_sha,reader_info,payload_files):
         "ReferenceBinaries":[],
         "ReferenceConfiguration":None,
     }
+    if kind=="duckstation":
+        if not duckstation:raise tx.Refused("DuckStation copy inventory missing")
+        normal_obj["DuckStation"]=duckstation
+    if kind=="pcsx2":
+        if not pcsx2:raise tx.Refused("PCSX2 copy inventory missing")
+        normal_obj["Pcsx2"]=pcsx2
     normal_bytes=(json.dumps(normal_obj,indent=2)+"\n").encode("utf-8")
     normal_sha=tx.sha_bytes(normal_bytes)
     bigbox_obj={
@@ -288,7 +365,7 @@ def setup_cmd_bytes(action,pin):
 
 def verify_distribution(base,data,expected):
     if data.get("Architecture")!="win-x64":raise tx.Refused("Expected win-x64 package architecture")
-    if tuple(data.get("AllowedKinds",[]))!=ALLOWED_KINDS:raise tx.Refused("Beta 1 package must allow only retroarch and mame")
+    if tuple(data.get("AllowedKinds",[]))!=ALLOWED_KINDS:raise tx.Refused("The package must allow exactly the supported kinds: "+SUPPORTED_TEXT)
     payload=data.get("PayloadFiles",[])
     if not payload or not any(f.get("Name")=="ControllerLobby.BigBox.exe" for f in payload):
         raise tx.Refused("Package missing ControllerLobby.BigBox.exe payload")
@@ -339,6 +416,7 @@ def configure_portable_from_active_plan(root,expected,include_management=True):
     tx.ENTRIES=[(e["Id"],e["Folder"],e["OriginalExe"]) for e in active["Entries"]]
     tx.SHIM_MANIFEST_PIN=tx.LOBBY_MANIFEST_PIN=expected.upper()
     tx.pre_redirect_check=None
+    tx.extra_cleanup=launch_copy_cleanup if any(e.get("Kind") in ("duckstation","pcsx2") for e in active["Entries"]) else None
     def plan(receipt,root_arg):
         files=[];edits=[]
         for e in active["Entries"]:
@@ -405,10 +483,29 @@ def configure(receipt, expected, root=None, selected_ids=None, action=None):
         for r in chosen:
             folder=r["Folder"]
             orig=r["OriginalExe"]
+            copy_files=[]
+            if r["Kind"]=="duckstation":
+                copy_root=safe(root_arg,folder+"/ControllerLobby.BigBox/"+DUCKSTATION_COPY)
+                for rel,src in r["DuckStationFiles"]:
+                    copy_files.append((rel,src,tx.sha(src)))
+                copy_files.append(("portable.txt",("bytes",b""),tx.sha_bytes(b"")))
+                inventory={"CopyRoot":copy_root,"Inventory":[{"Path":rel,"Sha256":h} for rel,_,h in copy_files]}
+            copy_folder=DUCKSTATION_COPY
+            if r["Kind"]=="pcsx2":
+                copy_folder=PCSX2_COPY
+                copy_root=safe(root_arg,folder+"/ControllerLobby.BigBox/"+PCSX2_COPY)
+                copy_files=list(r["Pcsx2Files"])
+                copy_files.append(("portable.ini",("bytes",b""),tx.sha_bytes(b"")))
+                inventory={"CopyRoot":copy_root,"Inventory":[{"Path":rel,"Sha256":h} for rel,_,h in copy_files]}
             normal_bytes,normal_sha,bigbox_bytes,bigbox_sha=generate_entry_manifests(
-                r["Kind"],r["ExecutablePath"],r["ExecutableSha256"],reader_info,payload_files
+                r["Kind"],r["ExecutablePath"],r["ExecutableSha256"],reader_info,payload_files,
+                inventory if copy_files and r["Kind"]=="duckstation" else None,inventory if copy_files and r["Kind"]=="pcsx2" else None
             )
             entry_files=[]
+            for rel,src,h in copy_files:
+                name=copy_folder+"/"+rel.replace("\\","/")
+                files.append((src,safe(root_arg,folder+"/ControllerLobby.BigBox/"+name),h))
+                entry_files.append({"Name":name,"Sha256":h,"Role":"copy"})
             for pf in payload_files:
                 src=safe(base,pf["Source"])
                 dst=safe(root_arg,folder+"/ControllerLobby.BigBox/"+pf["Name"])
@@ -481,7 +578,69 @@ def configure(receipt, expected, root=None, selected_ids=None, action=None):
             raise RuntimeError("system XInput1_4.dll changed before redirection")
     tx.plan=plan
     tx.pre_redirect_check=pre_redirect
+    tx.extra_cleanup=launch_copy_cleanup
     return cached[2]
+
+
+def launch_copy_cleanup(root,folders):
+    """Uninstall step for both kinds of launch copy; returns the names kept."""
+    return duckstation_cleanup(root,folders)+pcsx2_cleanup(root,folders)
+
+
+def pcsx2_cleanup(root,folders):
+    """Uninstall step for the PCSX2 copy after the planned files are gone: remove the session settings file and its
+    temporary files, every plain file under the session folder (it belongs to ControllerLobby, contract 3.3), then
+    empty folders bottom-up. Anything else is left in place and named. Returns the names kept."""
+    kept=[]
+    for folder in folders:
+        copy=Path(root)/folder/"ControllerLobby.BigBox"/PCSX2_COPY
+        if not copy.is_dir():continue
+        if copy.is_symlink() or getattr(os.lstat(copy),"st_file_attributes",0)&0x400:kept.append(str(copy));continue
+        inis=copy/"inis"
+        if inis.is_dir() and not inis.is_symlink() and not getattr(os.lstat(inis),"st_file_attributes",0)&0x400:
+            for p in [inis/"PCSX2.ini",*inis.glob("PCSX2.ini.*.tmp")]:
+                if p.is_file() and not p.is_symlink():p.unlink()
+        session=copy/"session"
+        if session.is_dir() and not session.is_symlink() and not getattr(os.lstat(session),"st_file_attributes",0)&0x400:
+            for directory,dirs,files in os.walk(session,followlinks=False):
+                dirs[:]=[d for d in dirs if not (Path(directory)/d).is_symlink() and not getattr(os.lstat(Path(directory)/d),"st_file_attributes",0)&0x400]
+                for f in files:
+                    p=Path(directory)/f
+                    if p.is_file() and not p.is_symlink():p.unlink()  # guard:pcsx2-session-cleanup
+        for directory,dirs,files in sorted(os.walk(copy,topdown=False),key=lambda x:-len(x[0])):
+            for f in files:kept.append(os.path.join(directory,f))
+            try:
+                if not os.listdir(directory):os.rmdir(directory)
+            except OSError:kept.append(directory)
+    return kept
+
+
+def duckstation_cleanup(root,folders):
+    """Uninstall step for launch copies, after the planned files are gone: remove the fixed generated files and the
+    snapshot folders' files, then empty folders bottom-up. Anything else is left in place and named (crash files
+    are evidence). Returns the names kept."""
+    kept=[]
+    for folder in folders:
+        copy=Path(root)/folder/"ControllerLobby.BigBox"/DUCKSTATION_COPY
+        if not copy.is_dir():continue
+        if copy.is_symlink() or getattr(os.lstat(copy),"st_file_attributes",0)&0x400:kept.append(str(copy));continue
+        for name in DUCKSTATION_GENERATED:
+            p=copy/name
+            if p.is_file() and not p.is_symlink():p.unlink()
+        for p in copy.glob("settings.ini.*.tmp"):
+            if p.is_file() and not p.is_symlink():p.unlink()
+        for sub in ("gamesettings","inputprofiles"):
+            d=copy/"session"/sub
+            if d.is_dir() and not d.is_symlink():
+                for p in d.iterdir():
+                    if p.is_file() and not p.is_symlink() and p.suffix.lower()==".ini":p.unlink()
+        for directory,dirs,files in sorted(os.walk(copy,topdown=False),key=lambda x:-len(x[0])):
+            for f in files:kept.append(os.path.join(directory,f))
+            try:
+                if not os.listdir(directory):os.rmdir(directory)
+            except OSError:
+                kept.append(directory)
+    return kept
 
 
 def is_record_or_preimage_name(name):
@@ -765,7 +924,7 @@ def reconcile_interrupted_repair(receipt,record,root,expected,for_remove=False):
                 raise tx.Refused(
                     "Rollback of generation %d was interrupted; automatic recovery is unavailable. "
                     "All user files, journal, and preimages are preserved in ControllerLobby.Setup; "
-                    "follow the manual recovery procedure in docs/BETA_SETUP_AND_RECOVERY.md."%g
+                    "follow the manual recovery procedure in docs/SETUP_AND_RECOVERY.md."%g
                 )
             all_staged=(
                 tx.ALLOWED_GEN_PATHS is not None
@@ -816,7 +975,7 @@ def reconcile_interrupted_repair(receipt,record,root,expected,for_remove=False):
                             raise tx.Refused(
                                 "Rollback of generation %d was interrupted; automatic recovery is unavailable. "
                                 "All user files, journal, and preimages are preserved in ControllerLobby.Setup; "
-                                "follow the manual recovery procedure in docs/BETA_SETUP_AND_RECOVERY.md."%g
+                                "follow the manual recovery procedure in docs/SETUP_AND_RECOVERY.md."%g
                             )
                     if os.path.islink(stage) or not os.path.isfile(stage) or tx.sha(stage)!=new_sha:
                         raise tx.Refused("Foreign or invalid repair stage file: "+stage)
@@ -865,7 +1024,7 @@ def verify_portable(receipt,record,root,expected):
                 return (
                     "MISMATCH Rollback of generation %d was interrupted; automatic recovery is unavailable. "
                     "All user files, journal, and preimages are preserved in ControllerLobby.Setup; "
-                    "follow the manual recovery procedure in docs/BETA_SETUP_AND_RECOVERY.md."%g
+                    "follow the manual recovery procedure in docs/SETUP_AND_RECOVERY.md."%g
                 )
             for info in gmap.values():
                 stage=tx.stage_path(info["path"],info["nonce"])
@@ -879,7 +1038,7 @@ def verify_portable(receipt,record,root,expected):
                     return (
                         "MISMATCH Rollback of generation %d was interrupted; automatic recovery is unavailable. "
                         "All user files, journal, and preimages are preserved in ControllerLobby.Setup; "
-                        "follow the manual recovery procedure in docs/BETA_SETUP_AND_RECOVERY.md."%g
+                        "follow the manual recovery procedure in docs/SETUP_AND_RECOVERY.md."%g
                     )
     res=tx.verify(receipt,record,root)
     if res!="verified":return res
@@ -1072,6 +1231,11 @@ def repair_portable(receipt,record,root,expected):
             raise tx.Refused("Emulators.xml entry "+e["Id"]+" is not redirected to ControllerLobby.BigBox; refusing repair")
     # Inspect every entry folder for foreign files or modified immutable payloads before changing anything
     payload_by_name={f["Name"]:f["Sha256"] for f in pkg_data["PayloadFiles"]}
+    # Repair does not rebuild a DuckStation launch copy yet; after a DuckStation update, uninstall and install again.
+    if any(e.get("Kind")=="duckstation" for e in active["Entries"]):  # guard:duckstation-repair-refused
+        raise tx.Refused("Repair is not available while DuckStation is installed. Run Uninstall, then install again")
+    if any(e.get("Kind")=="pcsx2" for e in active["Entries"]):  # guard:pcsx2-repair-refused
+        raise tx.Refused("Repair is not available while PCSX2 is installed. Run Uninstall, then install again")
     restores=[]
     for e in active["Entries"]:
         bb_dir=Path(safe(root,e["Folder"]+"/ControllerLobby.BigBox"))

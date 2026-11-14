@@ -2,7 +2,7 @@
 
 This library contains no LaunchBox types. It provides the legacy gate,
 verified payload binding, child-process ownership and result validation shared
-by the launcher components. The normal Beta host discovers emulator IDs rather
+by the launcher components. The normal host discovers emulator IDs rather
 than using the retained synthetic legacy game IDs.
 
 - **`I1Gate` (section 2):** the lobby opens only for SMB3 on RetroArch and mk on MAME (pinned game and emulator ids).

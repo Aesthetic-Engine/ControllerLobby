@@ -3,6 +3,9 @@
   <ItemGroup>
     <ProjectReference Include="../../experiment/ControllerLobby.MameTrial.HostCore/ControllerLobby.MameTrial.HostCore.csproj" />
     <ProjectReference Include="../../plugin/lobbylink/ControllerLobby.LobbyLink.csproj" />
+    <ProjectReference Include="../../adapters/duckstation/ControllerLobby.DuckStation/ControllerLobby.DuckStation.csproj" />
+    <ProjectReference Include="../../adapters/xemu/ControllerLobby.Xemu/ControllerLobby.Xemu.csproj" />
+    <ProjectReference Include="../../adapters/pcsx2/ControllerLobby.Pcsx2/ControllerLobby.Pcsx2.csproj" />
     <ProjectReference Include="../../helper/ControllerLobby.Lobby/ControllerLobby.Lobby.csproj" />
     <Compile Include="../../helper/ControllerLobby.Lobby.Windows/LobbyView.cs" Link="ControllerDrawing.cs" />
     <Compile Include="../../experiment/ControllerLobby.DirectIndex.Windows/Program.cs" Link="GoldenEyeWindow.cs" />

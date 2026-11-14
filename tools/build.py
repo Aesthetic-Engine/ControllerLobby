@@ -1,6 +1,6 @@
 """Build an immutable portable package from a clean, curated Git checkout."""
 from pathlib import Path
-import argparse
+import argparse, zipfile
 import hashlib
 import json
 import os
@@ -11,6 +11,8 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 PROJECT = 'integration/ControllerLobby.BigBox/ControllerLobby.BigBox.csproj'
 
+
+OFFICIAL_SDL3_ZIP_SHA256 = '75C2C0FC74E7D1206AAEDC22893A35887332F4F85F5C8B74FDDC10D177985F2C'
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest().upper()
@@ -23,6 +25,8 @@ def write_json(path, value):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--python-embed', required=True, type=Path)
+    ap.add_argument('--sdl3-zip', required=True, type=Path,
+                    help='official SDL3-3.4.18-win32-x64.zip (github.com/libsdl-org/SDL release-3.4.18)')
     ap.add_argument('--output', required=True, type=Path)
     ap.add_argument('--dotnet', default='dotnet')
     a = ap.parse_args()
@@ -31,6 +35,8 @@ def main():
         raise SystemExit('Output exists; choose a new directory')
     if not a.python_embed.is_file():
         raise SystemExit('Pass the official Python embeddable ZIP')
+    if not a.sdl3_zip.is_file() or sha(a.sdl3_zip) != OFFICIAL_SDL3_ZIP_SHA256:  # guard:sdl3-pin
+        raise SystemExit('Pass the official SDL3-3.4.18-win32-x64.zip (SHA-256 ' + OFFICIAL_SDL3_ZIP_SHA256 + ')')
     git = lambda *args: subprocess.check_output(['git', '-C', str(ROOT), *args], text=True).strip()
     if git('status', '--porcelain'):
         raise SystemExit('Build requires a clean curated source checkout')
@@ -93,12 +99,16 @@ def main():
         '--self-contained', 'true', '-o', str(payload), '-nologo',
         '-p:SatelliteResourceLanguages=en', '-p:DebugType=None', '-p:DebugSymbols=false',
         '-p:ContinuousIntegrationBuild=true', '-p:SourceRevisionId=' + commit])
+    # The Xemu controller observer loads SDL3 from the host folder (Xemu adapter contract 3.2).
+    with zipfile.ZipFile(a.sdl3_zip) as z:
+        (payload / 'SDL3.dll').write_bytes(z.read('SDL3.dll'))
     manifest = {
         'schema': 2, 'base_commit': commit, 'source_tree': inputs,
         'runtime_projects': sorted(projects), 'runtime_inputs': sorted(runtime_inputs),
         'configuration': {'sdk': sdk, 'configuration': 'Release', 'rid': 'win-x64',
                           'self_contained': True, 'satellite_languages': 'en', 'debug_type': 'None'},
         'scope': 'curated source, installer, documentation, build and verification tools',
+        'sdl3_zip_sha256': OFFICIAL_SDL3_ZIP_SHA256,
     }
     write_json(payload / 'source-manifest.json', manifest)
     sys.path.insert(0, str(snapshot / 'harness'))

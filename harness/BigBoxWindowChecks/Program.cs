@@ -2,8 +2,9 @@ using System.Windows;
 using ControllerLobby.DirectIndex.HostCore;
 internal static class Program
 {
- [STAThread] static void Main()
+ [STAThread] static int Main(string[] args)
  {
+  if(args.SequenceEqual(new[]{"--refusal"}))return Refusal();
   _=new Application();int passed=0;bool frontend=true;
   void Need(bool condition,string name){if(!condition)throw new Exception(name);Console.WriteLine("PASS "+name);passed++;}
   var golden=new ControllerLobby.DirectIndex.Windows.TrialWindow(null,()=>frontend,true);
@@ -36,6 +37,23 @@ internal static class Program
   normal.Status("Starting game","Using existing controls");
   Need(title.Text=="Starting game","launch cue clears for status");
   normal.Close();
+  // The refusal path runs in a fresh process, as a real failed launch does: no Application exists yet.
+  var child=System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(Environment.ProcessPath!,"--refusal"){UseShellExecute=false,RedirectStandardOutput=true})!;
+  string childOut=child.StandardOutput.ReadToEnd();child.WaitForExit();Console.Write(childOut);
+  Need(child.ExitCode==0,"actual refusal path shows its notice and closes (child process)");
   Console.WriteLine(passed+"/"+passed+" actual offscreen WPF checks; no frontend/controller/game");
+  return 0;
+ }
+ static int Refusal()
+ {
+  var timer=System.Diagnostics.Stopwatch.StartNew();
+  bool shown=ControllerLobby.BigBox.Program.ShowRefusal(new System.IO.IOException("Normal-play manifest changed"),300);
+  timer.Stop();
+  bool closed=timer.ElapsedMilliseconds>=300&&timer.ElapsedMilliseconds<10000;
+  bool second=!ControllerLobby.BigBox.Program.ShowRefusal(new System.IO.IOException("again"),300);
+  Console.WriteLine((shown?"PASS":"FAIL")+" refusal notice loaded and visible");
+  Console.WriteLine((closed?"PASS":"FAIL")+" refusal notice closed itself after "+timer.ElapsedMilliseconds+" ms");
+  Console.WriteLine((second?"PASS":"FAIL")+" a second notice after shutdown is skipped without error");
+  return shown&&closed&&second?0:1;
  }
 }

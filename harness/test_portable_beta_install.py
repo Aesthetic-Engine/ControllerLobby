@@ -1,4 +1,4 @@
-"""Exercise the Schema 2 portable Beta 1 installer, XInput reader provider probe,
+"""Exercise the Schema 2 portable installer, XInput reader provider probe,
 persistent ControllerLobby.Setup management copy, post-update uninstall, explicit
 repair, junction/reparse confinement, and executable causal mutation controls in
 isolated synthetic non-owner LaunchBox roots.
@@ -202,6 +202,7 @@ def run_cli(
     envextra: dict | None = None,
     entries: str | None = None,
     pin: str | None = None,
+    timeout: int = 30,
 ):
     env = dict(os.environ)
     env.update({
@@ -237,7 +238,7 @@ def run_cli(
         cmd.extend(["--package-sha256", sha(runner_dir / "package.json")])
     if entries is not None:
         cmd.extend(["--entries", entries])
-    p = subprocess.run(cmd, env=env, capture_output=True, timeout=30)
+    p = subprocess.run(cmd, env=env, capture_output=True, timeout=timeout)
     log = case / f"{action}-{len(list(case.glob('*.log')))}.log"
     log.write_bytes(p.stdout + p.stderr)
     assert p.returncode == expected, (
@@ -840,7 +841,7 @@ def case_reparse_and_junction_confinement(c: Path, r: Path, p: Path):
 
 def case_excluded_platforms_wrappers_and_ambiguous_entries_refused(c: Path, r: Path, p: Path):
     before = tree(r)
-    # 1. Explicit selection of standalone Dolphin entry is refused in Beta 1.
+    # 1. Explicit selection of standalone Dolphin entry is refused.
     run_cli(c, p, r, "install", 3, entries=DOLPHIN_ID)
     assert tree(r) == before
 
@@ -955,8 +956,9 @@ def case_built_runtime_apphost_intake_and_roundtrip(c: Path, r: Path, p: Path):
     assert pkg_data["RuntimeProvenance"]["SourceManifestSha256"] == expected_source_sha
 
     before = tree(r)
-    # Install using the real 255-file self-contained candidate-02 payload (runs actual ControllerLobby.BigBox.exe --verify-only at both final locations).
-    run_cli(c, cand02_pkg, r, "install", 0)
+    # The built payload journals hundreds of durable copies; small fixtures keep run_cli's 30s default.
+    # Runs actual ControllerLobby.BigBox.exe --verify-only at both final locations.
+    run_cli(c, cand02_pkg, r, "install", 0, timeout=120)
     shutil.rmtree(cand02_pkg)
     setup_dir = r / "ControllerLobby.Setup"
 
@@ -974,16 +976,16 @@ def case_built_runtime_apphost_intake_and_roundtrip(c: Path, r: Path, p: Path):
         target_f = r / MAME_FOLDER / "ControllerLobby.BigBox" / rel_name
         orig_b = target_f.read_bytes()
         target_f.write_bytes(orig_b + b"\ntampered\n")
-        run_cli(c, setup_dir, r, "verify", 5)
+        run_cli(c, setup_dir, r, "verify", 5, timeout=120)
         target_f.write_bytes(orig_b)
-        run_cli(c, setup_dir, r, "verify", 0)
+        run_cli(c, setup_dir, r, "verify", 0, timeout=120)
 
     # Delete deployed PresentationFramework.dll and update retroarch.exe -> repair restores DLL from ControllerLobby.Setup\payload and re-verifies real apphost!
     (r / RETRO_FOLDER / "ControllerLobby.BigBox" / "PresentationFramework.dll").unlink()
     orig_retro_bytes = (r / RETRO_FOLDER / "retroarch.exe").read_bytes()
     (r / RETRO_FOLDER / "retroarch.exe").write_bytes(b"retroarch-updated-after-cand02-install")
-    run_cli(c, setup_dir, r, "repair", 0)
-    run_cli(c, setup_dir, r, "verify", 0)
+    run_cli(c, setup_dir, r, "repair", 0, timeout=120)
+    run_cli(c, setup_dir, r, "verify", 0, timeout=120)
 
     # Restore original retroarch.exe bytes and run Uninstall.cmd -> verify LaunchBox root matches pre-install tree byte-for-byte.
     (r / RETRO_FOLDER / "retroarch.exe").write_bytes(orig_retro_bytes)
@@ -994,7 +996,7 @@ def case_built_runtime_apphost_intake_and_roundtrip(c: Path, r: Path, p: Path):
         "SHIM_INSTALL_TEST_INJECT": "",
         "CONTROLLERLOBBY_NO_PAUSE": "1",
     })
-    u_res = subprocess.run(["cmd.exe", "/d", "/c", str(setup_dir / "Uninstall.cmd")], env=env, capture_output=True, timeout=30)
+    u_res = subprocess.run('cmd.exe /d /s /c ""' + str(setup_dir / "Uninstall.cmd") + '""', env=env, capture_output=True, timeout=120)
     assert u_res.returncode == 0, u_res.stdout.decode(errors="replace") + u_res.stderr.decode(errors="replace")
     assert tree(r) == before
 
@@ -1171,17 +1173,17 @@ def case_interrupted_rollback_safe_stop_and_manual_recovery(c: Path, r: Path, p:
         v_res = run_cli(c, p, sub_r, "verify", 5, pin=pin)
         v_out = (v_res.stdout + v_res.stderr).decode(errors="replace")
         assert "Rollback of generation 2 was interrupted; automatic recovery is unavailable" in v_out, (mode, v_out)
-        assert "docs/BETA_SETUP_AND_RECOVERY.md" in v_out, (mode, v_out)
+        assert "docs/SETUP_AND_RECOVERY.md" in v_out, (mode, v_out)
         assert tree(sub_r) == snapshot_interrupted_rollback
 
         for act in ("repair", "remove"):
             a_res = run_cli(c, p, sub_r, act, 3, pin=pin)
             a_out = (a_res.stdout + a_res.stderr).decode(errors="replace")
             assert "Rollback of generation 2 was interrupted; automatic recovery is unavailable" in a_out, (mode, act, a_out)
-            assert "docs/BETA_SETUP_AND_RECOVERY.md" in a_out, (mode, act, a_out)
+            assert "docs/SETUP_AND_RECOVERY.md" in a_out, (mode, act, a_out)
             assert tree(sub_r) == snapshot_interrupted_rollback, f"{act} mutated files during interrupted rollback in {mode}!"
 
-        # 4. Execute the documented step-by-step Manual Recovery Procedure from docs/BETA_SETUP_AND_RECOVERY.md (Section 8, Steps 1-4).
+        # 4. Execute the documented step-by-step Manual Recovery Procedure from docs/SETUP_AND_RECOVERY.md (Section 8, Steps 1-4).
         rec_lines = rec_path.read_text(encoding="utf-8").splitlines(keepends=True)
         pending_gen2 = []
         for ln in rec_lines:
@@ -1256,4 +1258,4 @@ for name, fn in cases:
         print("FAIL " + name + ": " + str(e), flush=True)
         raise
 
-print(f"{len(cases)}/{len(cases)} portable Beta 1 installer checks passed; no live LaunchBox writes")
+print(f"{len(cases)}/{len(cases)} portable installer checks passed; no live LaunchBox writes")

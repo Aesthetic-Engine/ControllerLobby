@@ -74,14 +74,16 @@ internal sealed class TrialWindow : Window,ITrialView
     public bool Alive=>Volatile.Read(ref alive)==1&&(frontendAlive?.Invoke()??true);
     public string EntrySurface=>closeAfterRun?"BigBox private installer":"separate experimental four-card launcher";
     public IReadOnlyList<int> DisplayedSlots=>displayedSlots;
-    public TrialWindow(TrialPackage? package,Func<bool>? frontendAlive=null,bool closeAfterRun=false,Func<ITrialView,CancellationToken,Action,Task<bool>>? normalRun=null)
+    private readonly bool noticeOnly;
+    public TrialWindow(TrialPackage? package,Func<bool>? frontendAlive=null,bool closeAfterRun=false,Func<ITrialView,CancellationToken,Action,Task<bool>>? normalRun=null,bool noticeOnly=false)
     {
+        this.noticeOnly=noticeOnly;
         this.normalRun=normalRun;this.frontendAlive=frontendAlive;this.closeAfterRun=closeAfterRun;this.package=package;Title="Controller Lobby — GoldenEye trial";Width=Math.Min(1400,SystemParameters.WorkArea.Width);Height=Math.Min(800,SystemParameters.WorkArea.Height);MinWidth=900;MinHeight=550;WindowStartupLocation=WindowStartupLocation.CenterScreen;
         Background=Paint("#0B1220");Foreground=Brushes.White;FontFamily=new("Segoe UI");
         var root=new Grid{Margin=new(34,26,34,24),Background=Paint("#0B1220")};
         root.RowDefinitions.Add(new(){Height=GridLength.Auto});root.RowDefinitions.Add(new(){Height=GridLength.Auto});root.RowDefinitions.Add(new(){Height=new(1,GridUnitType.Star)});root.RowDefinitions.Add(new(){Height=GridLength.Auto});
         root.Children.Add(Text(normalRun==null?"CONTROLLER LOBBY  /  GOLDENEYE TRIAL":"CONTROLLER LOBBY",14,"#87A4C0"));
-        var heading=new StackPanel{Margin=new(0,20,0,24)};title=Text("Choose your players",34);detail=Text("Checking the reviewed test package",17,"#A9B8CE");detail.TextWrapping=TextWrapping.Wrap;heading.Children.Add(title);heading.Children.Add(detail);Grid.SetRow(heading,1);root.Children.Add(heading);
+        var heading=new StackPanel{Margin=new(0,20,0,24)};title=Text(noticeOnly?"":"Choose your players",34);detail=Text(normalRun==null?"Checking the reviewed test package":"Getting ready…",17,"#A9B8CE");detail.TextWrapping=TextWrapping.Wrap;heading.Children.Add(title);heading.Children.Add(detail);Grid.SetRow(heading,1);root.Children.Add(heading);
         var row=new Grid();
         for(int i=0;i<4;i++)
         {
@@ -92,10 +94,12 @@ internal sealed class TrialWindow : Window,ITrialView
             tiles[i]=new Border{Background=Paint("#121F31"),BorderBrush=Paint("#293B53"),BorderThickness=new(1),CornerRadius=new(12),Margin=new(i==0?0:8,0,i==3?0:8,0),Child=body};Grid.SetColumn(tiles[i],i);row.Children.Add(tiles[i]);
         }
         Grid.SetRow(row,2);root.Children.Add(row);
-        var footer=new DockPanel{Margin=new(0,20,0,0)};stop=new Button{Content="Esc  Cancel",Width=140,Height=42,FontSize=16,Focusable=false};stop.Click+=(_,_)=>{if(Volatile.Read(ref finished)==1)Close();else RequestStop();};DockPanel.SetDock(stop,Dock.Right);footer.Children.Add(stop);
-        if(normalRun!=null){var existing=new Button{Content="Use existing controls",Height=42,Margin=new(0,0,16,0),Padding=new(14,0,14,0)};existing.Click+=(_,_)=>existingControls.TrySetResult(true);DockPanel.SetDock(existing,Dock.Right);footer.Children.Add(existing);}
-        footer.Children.Add(Text(normalRun==null?"Wake controllers here and press Start to join. Keep joined controllers connected.":"Press Start to join. Keep controllers connected until the game starts.",14,"#9DB0C8"));Grid.SetRow(footer,3);root.Children.Add(footer);Content=root;
-        PreviewKeyDown+=(_,e)=>{if(e.Key==Key.Escape){RequestStop();e.Handled=true;}};
+        bool lobby=normalRun!=null&&!noticeOnly;
+        var footer=new DockPanel{Margin=new(0,20,0,0)};stop=new Button{Content=noticeOnly?"Esc  Close":lobby?"Hold Back / Esc  Cancel":"Esc  Cancel",MinWidth=140,Height=42,FontSize=16,Padding=new(14,0,14,0),Focusable=false};stop.Click+=(_,_)=>{if(Volatile.Read(ref finished)==1)Close();else RequestStop();};DockPanel.SetDock(stop,Dock.Right);footer.Children.Add(stop);
+        if(lobby){var existing=new Button{Content="Y - Bypass ControllerLobby",Height=42,Margin=new(0,0,16,0),Padding=new(14,0,14,0)};existing.Click+=(_,_)=>existingControls.TrySetResult(true);DockPanel.SetDock(existing,Dock.Right);footer.Children.Add(existing);}
+        footer.Children.Add(Text(normalRun==null?"Wake controllers here and press Start to join. Keep joined controllers connected.":noticeOnly?"":"Press Start to join. Keep controllers connected until the game starts.",14,"#9DB0C8"));Grid.SetRow(footer,3);root.Children.Add(footer);Content=root;
+        if(noticeOnly)row.Visibility=Visibility.Collapsed;
+        PreviewKeyDown+=(_,e)=>{if(e.Key==Key.Escape){if(Volatile.Read(ref finished)==1)Close();else RequestStop();e.Handled=true;}};
         Deactivated+=(_,_)=>{if(Volatile.Read(ref selecting)==1)RequestStop();};
         Closing+=(_,e)=>{if(running){e.Cancel=true;RequestStop();Status(normalRun==null?"Stopping GoldenEye":"Stopping game","Waiting for the owned game process to end");}else Interlocked.Exchange(ref alive,0);};
         if(normalRun!=null)Title="Controller Lobby";
@@ -130,7 +134,13 @@ internal sealed class TrialWindow : Window,ITrialView
             if(normalRun!=null)safeToClose=await normalRun(this,stopping.Token,()=>Dispatcher.Invoke(Hide));
             else await TrialCoordinator.Run(package!,state,this,stopping.Token);
         }
-        catch(Exception e)when(e is not OutOfMemoryException){safeToClose=false;Status(normalRun==null?"Trial stopped":"Game launch stopped",e.Message);Show();}
+        catch(Exception e)when(e is not OutOfMemoryException)
+        {
+            safeToClose=false;Status(normalRun==null?"Trial stopped":"Game launch stopped",e.Message+(normalRun==null?"":" This window closes in 15 seconds, or press Esc."));Show();
+            // Normal play: nothing remains to inspect in this window (the emulator job is kill-on-close and
+            // an unfinished session is recovered at the next launch), so a couch user is not left stuck.
+            if(normalRun!=null)_=Task.Delay(15000).ContinueWith(_=>Dispatch(()=>{if(Volatile.Read(ref finished)==1)Close();}),TaskScheduler.Default);
+        }
         finally{FinishAfterRun(safeToClose);}
     }
     internal void FinishAfterRun(bool safeToClose=true){running=false;Interlocked.Exchange(ref finished,1);stop.Content="Close";if(closeAfterRun&&safeToClose)Close();}

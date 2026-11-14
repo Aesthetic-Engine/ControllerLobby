@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using ControllerLobby.DirectIndex.Native;
+using ControllerLobby.DirectIndex.Selection;
 
 namespace ControllerLobby.DirectIndex.HostCore;
 
@@ -16,12 +17,18 @@ public sealed class TrialSampler : IDisposable
     private int sequence;
     private readonly object observationGate=new();
     private int frozenMask;
+    // Compact logging (normal play): a sample is written only when connection, read result or buttons
+    // change, plus a heartbeat every 5 s, and without a per-sample disk flush. Trials keep full logs.
+    private readonly bool compact;
+    private int skipped;
+    private EndpointSample? lastWritten;
+    private long lastWrittenQpc;
     public EndpointRead Latest=>Volatile.Read(ref latest);
     public Exception? Failure=>Volatile.Read(ref failure);
     public event Action<EndpointRead>? Observed;
-    public TrialSampler(PinnedXInputReader reader,string log,string runId,string manifestSha256,bool collectUntilConfirmation=false)
+    public TrialSampler(PinnedXInputReader reader,string log,string runId,string manifestSha256,bool collectUntilConfirmation=false,bool compactLog=false)
     {
-        this.reader=reader;latest=reader.Read();frozenMask=collectUntilConfirmation?-1:latest.Sample.ConnectedMask;
+        this.reader=reader;compact=compactLog;latest=reader.Read();frozenMask=collectUntilConfirmation?-1:latest.Sample.ConnectedMask;
         stream=new FileStream(log,FileMode.CreateNew,FileAccess.Write,FileShare.Read);
         Write(new{Kind="open",Schema=1,RunId=runId,ManifestSha256=manifestSha256,QpcFrequency=Stopwatch.Frequency,ProcessId=Environment.ProcessId,Reader=reader.Binding});
         WriteSample(latest);
@@ -59,10 +66,23 @@ public sealed class TrialSampler : IDisposable
         }
         catch(Exception e)when(e is not OutOfMemoryException){Interlocked.CompareExchange(ref failure,e,null);}
     }
-    private void WriteSample(EndpointRead read)=>Write(new{Kind="sample",Sequence=sequence++,read.Qpc,read.QpcFrequency,read.Slots});
-    private void Write<T>(T value)
+    private void WriteSample(EndpointRead read)
     {
-        byte[] bytes=Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value)+"\n");stream.Write(bytes);stream.Flush(true);
+        int number=sequence++;
+        if(compact)
+        {
+            var s=read.Sample;var last=lastWritten;
+            bool same=last!=null&&last.ConnectedMask==s.ConnectedMask&&last.Readable==s.Readable&&last.Buttons.SequenceEqual(s.Buttons)
+                &&read.Qpc-lastWrittenQpc<read.QpcFrequency*5;
+            if(/*guard:compact-skip*/same){skipped++;return;}
+            lastWritten=s;lastWrittenQpc=read.Qpc;
+            Write(new{Kind="sample",Sequence=number,Skipped=skipped,read.Qpc,read.QpcFrequency,read.Slots},durable:false);skipped=0;return;
+        }
+        Write(new{Kind="sample",Sequence=number,read.Qpc,read.QpcFrequency,read.Slots});
+    }
+    private void Write<T>(T value,bool durable=true)
+    {
+        byte[] bytes=Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value)+"\n");stream.Write(bytes);stream.Flush(durable);
     }
     public bool Fresh
     {

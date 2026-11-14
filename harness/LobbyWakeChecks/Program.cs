@@ -50,6 +50,44 @@ Case("normal-held-P2-Start-plus-fresh-P1-confirms-after-release",()=>{
  p.Observe(Read(3,3));Need(p.Failure==null&&p.Phase==SelectionPhase.AwaitingRelease&&p.Seal==null,"held P2 prevented fresh P1 confirmation");
  p.Observe(Read(3,2));Need(p.Seal==null,"P2 held Start allowed seal");p.Observe(Read(3));Need(p.Seal?.PlayerIndices.SequenceEqual(new[]{0,1})==true,"release lost assignments");
 });
+EndpointRead Pad(int mask,int slot,ushort button)=>new(++qpc,1000,Enumerable.Range(0,4).Select(i=>new SlotRead(i,(mask&(1<<i))!=0?0u:1167u,1,(ushort)(i==slot?button:0),0,0,0,0,0,0)).ToArray());
+const ushort Back=LobbyJoinPresenter.CancelButton,Y=LobbyJoinPresenter.ExistingControlsButton;
+void Hold(LobbyJoinPresenter p,int mask,int slot,ushort button,long ticks){p.Observe(Pad(mask,slot,button));qpc+=ticks;p.Observe(Pad(mask,slot,button));}
+Case("normal-tap-of-back-or-y-does-nothing",()=>{
+ var p=new LobbyJoinPresenter(Read(3),4,normalPlay:true);Press(p,3,0);
+ foreach(ushort b in new[]{Back,Y}){Hold(p,3,1,b,500);p.Observe(Read(3));qpc+=2000;p.Observe(Read(3));}
+ Need(!p.CancelRequested&&!p.ExistingControlsRequested&&p.Cards.Count==1&&p.Failure==null,"a short press acted");
+});
+Case("normal-held-back-cancels-from-any-pad",()=>{
+ var p=new LobbyJoinPresenter(Read(3),4,normalPlay:true);Press(p,3,0);
+ p.Observe(Pad(3,1,Back));Need(!p.CancelRequested&&p.Instruction.Contains("Keep holding Back"),"hold hint missing or instant cancel");
+ qpc+=998;p.Observe(Pad(3,1,Back));Need(!p.CancelRequested,"cancelled before one second");
+ p.Observe(Pad(3,1,Back));Need(p.CancelRequested&&!p.ExistingControlsRequested&&p.Seal==null,"unjoined pad held Back did not cancel");
+ Press(p,3,0);Need(p.Cards.Count==1&&p.Seal==null,"lobby kept collecting after cancel");
+});
+Case("normal-held-y-requests-existing-controls",()=>{
+ var p=new LobbyJoinPresenter(Read(1),4,normalPlay:true);
+ Hold(p,1,0,Y,1000);Need(p.ExistingControlsRequested&&!p.CancelRequested&&p.Cards.Count==0,"held Y did not request existing controls");
+});
+Case("normal-interrupted-hold-restarts-the-second",()=>{
+ var p=new LobbyJoinPresenter(Read(1),4,normalPlay:true);
+ Hold(p,1,0,Back,700);p.Observe(Read(1));Hold(p,1,0,Back,700);Need(!p.CancelRequested,"two short holds were added together");
+ qpc+=300;p.Observe(Pad(1,0,Back));Need(p.CancelRequested,"continuous second hold ignored");
+});
+Case("normal-back-held-at-open-needs-release",()=>{
+ var p=new LobbyJoinPresenter(Pad(1,0,Back),4,normalPlay:true);Hold(p,1,0,Back,5000);Need(!p.CancelRequested,"held Back at open cancelled");
+ p.Observe(Read(1));Hold(p,1,0,Back,1000);Need(p.CancelRequested,"fresh hold after release ignored");
+});
+Case("normal-pad-waking-with-back-or-y-held-needs-release",()=>{
+ foreach(ushort b in new[]{Back,Y}){var p=new LobbyJoinPresenter(Read(0),4,normalPlay:true);Hold(p,1,0,b,5000);Need(!p.CancelRequested&&!p.ExistingControlsRequested,"wake-held button acted");p.Observe(Read(1));Hold(p,1,0,b,1000);Need(p.CancelRequested||p.ExistingControlsRequested,"fresh hold after wake ignored");}
+});
+Case("normal-back-ignored-while-awaiting-release",()=>{
+ var p=new LobbyJoinPresenter(Read(3),4,normalPlay:true);Press(p,3,0);Press(p,3,1);p.Observe(Read(3,1));Need(p.Phase==SelectionPhase.AwaitingRelease,"not awaiting release");
+ Hold(p,3,1,Back,1500);Need(!p.CancelRequested&&p.Seal==null,"Back during confirmation cancelled or sealed with a held button");p.Observe(Read(3));Need(p.Seal!=null,"release did not seal");
+});
+Case("trial-mode-ignores-back-and-y",()=>{
+ var p=new LobbyJoinPresenter(Read(1),4);Hold(p,1,0,Back,2000);p.Observe(Read(1));Hold(p,1,0,Y,2000);Need(!p.CancelRequested&&!p.ExistingControlsRequested&&p.Failure==null,"trial acted on Back/Y");
+});
 string dll=Path.GetFullPath(args[0]);nint library=NativeLibrary.Load(dll);
 try{
 var set=Marshal.GetDelegateForFunctionPointer<SetSlot>(NativeLibrary.GetExport(library,"SetSlot"));
@@ -61,6 +99,27 @@ Case("collecting-sampler-allows-wakes-and-freezes-exact-current-read",()=>{
  var stale=sampler.Latest;Need(SpinWait.SpinUntil(()=>!ReferenceEquals(stale,sampler.Latest),TimeSpan.FromSeconds(2)),"sampler stalled");Need(!sampler.TryFreeze(stale,15),"stale read froze topology");
  Need(!sampler.TryFreeze(sampler.Latest,7),"mismatched mask frozen");Need(!sampler.TryFreeze(sampler.Latest,0),"empty topology frozen");
  bool frozen=false;sampler.Observed+=r=>{if(!frozen)frozen=sampler.TryFreeze(r,15);};Need(SpinWait.SpinUntil(()=>Volatile.Read(ref frozen),TimeSpan.FromSeconds(2)),"current read did not freeze");Need(!sampler.TryFreeze(sampler.Latest,15),"double freeze accepted");
+});
+Case("compact-log-writes-changes-not-every-idle-sample",()=>{
+ // Paced by samples the sampler reports, not by wall time: under load a fixed window saw too few samples
+ // (check-69cc1ab: "full log did not record every sample (14)"). Returns sample lines and samples observed.
+ (int lines,int observed) Lines(bool compact,bool press){
+  for(uint i=0;i<4;i++)set(i,0,0);string path=Log();int seen=0;
+  using(var reader=Reader())using(var sampler=new TrialSampler(reader,path,"fixture","fixture",true,compactLog:compact)){
+   bool held=false,released=false;
+   sampler.Observed+=r=>{Interlocked.Increment(ref seen);ushort b=r.Slots[2].Buttons;if(b==0x0010)Volatile.Write(ref held,true);else if(Volatile.Read(ref held)&&b==0)Volatile.Write(ref released,true);};
+   void After(int count,string what){int target=Volatile.Read(ref seen)+count;Need(SpinWait.SpinUntil(()=>Volatile.Read(ref seen)>=target,TimeSpan.FromSeconds(30)),"sampler stalled "+what);}
+   sampler.Start();After(15,"before the press");
+   if(press){set(2,0,0x0010);Need(SpinWait.SpinUntil(()=>Volatile.Read(ref held),TimeSpan.FromSeconds(30)),"press not observed");After(3,"while held");
+    set(2,0,0);Need(SpinWait.SpinUntil(()=>Volatile.Read(ref released),TimeSpan.FromSeconds(30)),"release not observed");}
+   After(15,"after the press");}
+  // Dispose has joined the sampler thread, so every observed sample is counted and written.
+  return (File.ReadAllLines(path).Count(l=>l.Contains("\"Kind\":\"sample\"")),Volatile.Read(ref seen));}
+ var full=Lines(false,false);var idle=Lines(true,false);var pressed=Lines(true,true);
+ // The constructor writes one sample before the thread starts; every observed sample follows it.
+ Need(full.lines==full.observed+1&&full.observed>=30,"full log did not record every sample ("+full.lines+" lines, "+full.observed+" observed)");
+ Need(idle.lines<=2&&idle.observed>=30,"compact log wrote idle samples ("+idle.lines+" lines, "+idle.observed+" observed)");
+ Need(pressed.lines>=idle.lines+2,"compact log missed the press and release ("+pressed.lines+" vs "+idle.lines+")");
 });
 foreach(uint error in new uint[]{1167,5})Case("post-freeze-"+error+"-then-recovery-keeps-fault",()=>{
  for(uint i=0;i<4;i++)set(i,0,0);using var reader=Reader();using var sampler=new TrialSampler(reader,Log(),"fixture","fixture",true);

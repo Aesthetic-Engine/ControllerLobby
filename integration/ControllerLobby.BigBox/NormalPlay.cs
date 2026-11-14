@@ -10,21 +10,26 @@ using ControllerLobby.DirectIndex.Preparation;
 using ControllerLobby.DirectIndex.Selection;
 using ControllerLobby.RetroArch;
 using ControllerLobby.Mame;
+using ControllerLobby.DuckStation;
 using ControllerLobby.Transaction;
 
 namespace ControllerLobby.BigBox;
 
 internal sealed record NormalManifest(int Schema,string Kind,string Executable,string ExecutableSha256,
-    ReaderBinding Reader,string[] ReferenceArguments,TrialTarget? RetroArch,PayloadFile[] Payload,PayloadFile[]? ReferenceBinaries=null,ProtectedFile[]? ReferenceConfiguration=null);
+    ReaderBinding Reader,string[] ReferenceArguments,TrialTarget? RetroArch,PayloadFile[] Payload,PayloadFile[]? ReferenceBinaries=null,ProtectedFile[]? ReferenceConfiguration=null,
+    DuckStationCopy? DuckStation=null,DuckStationCopy? Pcsx2=null);
 internal sealed class NormalPackage
 {
     public NormalManifest Manifest{get;}
     private readonly ProtectedFile[] pins;
+    /// <summary>Set when Open(allowUpdateDrift) found the emulator or system XInput updated since setup.
+    /// The package is then valid only for launching with existing controls; the reader must not be loaded.</summary>
+    public string? UpdateDrift{get;private init;}
     private NormalPackage(NormalManifest manifest,ProtectedFile[] pins){Manifest=manifest;this.pins=pins;}
     public bool Current()=>pins.All(p=>p.Unchanged());
     internal static void RequireBetaKind(string kind)
     {
-        if(kind is not ("mame" or "retroarch"))throw new IOException("Beta 1 supports MAME and RetroArch only");
+        if(kind is not ("mame" or "retroarch" or DuckStationLaunch.Kind or XemuLaunch.Kind or Pcsx2Launch.Kind))throw new IOException("ControllerLobby supports MAME, RetroArch, DuckStation, Xemu and PCSX2 only");
     }
     private static void RejectDuplicates(JsonElement value)
     {
@@ -35,7 +40,11 @@ internal sealed class NormalPackage
         }
         else if(value.ValueKind==JsonValueKind.Array)foreach(var v in value.EnumerateArray())RejectDuplicates(v);
     }
-    public static NormalPackage Open(string root,string expected)
+    public static NormalPackage Open(string root,string expected)=>Open(root,expected,false);
+    // allowUpdateDrift tolerates only a changed hash of the configured emulator or System32 XInput1_4.dll
+    // (an ordinary emulator or Windows update). Everything else, including ControllerLobby's own files,
+    // still refuses. The current files are pinned so a further change before launch is still caught.
+    public static NormalPackage Open(string root,string expected,bool allowUpdateDrift)
     {
         string path=Path.Combine(root,"normal.json");var stamp=ProtectedFile.Capture(path);
         if(!stamp.Present||stamp.Sha256!=expected)throw new IOException("Normal-play manifest changed");
@@ -56,30 +65,59 @@ internal sealed class NormalPackage
             if(!files.Any(p=>p.Path.Equals(actual,StringComparison.OrdinalIgnoreCase)))throw new IOException("Executing host not pinned");
         string system=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System),"XInput1_4.dll");
         if(!m.Reader.LibraryPath.Equals(system,StringComparison.OrdinalIgnoreCase)||!m.Reader.FunctionModulePath.Equals(system,StringComparison.OrdinalIgnoreCase)||m.Reader.Export is not(StateExport.NamedGetState or StateExport.Ordinal100))throw new IOException("System XInput reader required");
+        string? drift=null;
         var executable=ProtectedFile.Capture(m.Executable);
-        if(!executable.Present||executable.Sha256!=m.ExecutableSha256||executable.Path.Equals(Environment.ProcessPath,StringComparison.OrdinalIgnoreCase))throw new IOException("Configured emulator changed");
+        if(!executable.Present||executable.Path.Equals(Environment.ProcessPath,StringComparison.OrdinalIgnoreCase))throw new IOException("Configured emulator changed");
+        if(executable.Sha256!=m.ExecutableSha256){if(!allowUpdateDrift)throw new IOException("Configured emulator changed");drift="emulator";} // guard:drift-emulator
         files.Add(executable);
         var native=ProtectedFile.Capture(system);
-        if(!native.Present||native.Sha256!=m.Reader.LibrarySha256||native.Sha256!=m.Reader.FunctionModuleSha256)throw new IOException("Pinned reader changed");
+        if(!native.Present)throw new IOException("Pinned reader changed");
+        if(native.Sha256!=m.Reader.LibrarySha256||native.Sha256!=m.Reader.FunctionModuleSha256){if(!allowUpdateDrift)throw new IOException("Pinned reader changed");drift??="windows";} // guard:drift-reader
         files.Add(native);
+        // The copy is ControllerLobby's own: it is pinned in full whenever it could be launched, and never tolerated as drift.
+        if(/*guard:duckstation-block-kind*/(m.Kind==DuckStationLaunch.Kind)!=(m.DuckStation!=null))throw new IOException("Invalid normal-play manifest");
+        if(m.DuckStation!=null&&drift!="emulator")files.AddRange(DuckStationLaunch.Pin(root,m));
+        if(/*guard:pcsx2-block-kind*/(m.Kind==Pcsx2Launch.Kind)!=(m.Pcsx2!=null)||m.Pcsx2!=null&&m.DuckStation!=null)throw new IOException("Invalid normal-play manifest");
+        if(m.Pcsx2!=null&&drift!="emulator")files.AddRange(Pcsx2Launch.Pin(root,m));
         if(files.Select(p=>p.Path).Distinct(StringComparer.OrdinalIgnoreCase).Count()!=files.Count)throw new IOException("Duplicate pinned path");
-        var result=new NormalPackage(m,files.ToArray());if(!result.Current())throw new IOException("Package changed during inspection");return result;
+        var result=new NormalPackage(m,files.ToArray()){UpdateDrift=drift};if(!result.Current())throw new IOException("Package changed during inspection");return result;
     }
 }
 
 internal sealed record NormalPlan(string[] Arguments,bool Assigned,string Notice,ProtectedFile[] Inputs)
 {
+    /// <summary>The program to start when it is not the manifest's own executable (the DuckStation launch copy).</summary>
+    public string? Executable{get;init;}
     public bool Current()=>Inputs.All(p=>p.Unchanged());
-    public static NormalPlan Existing(NormalManifest m,string[] original)
+    public const string ExistingNotice="Using this game's existing controls. Lobby join order is not applied.";
+    public static NormalPlan Existing(NormalManifest m,string[] original)=>Existing(m,original,ExistingNotice);
+    public static NormalPlan Existing(NormalManifest m,string[] original,string notice)
     {
         NormalPackage.RequireBetaKind(m.Kind);
-        return new(m.Kind=="mame"?[..original,"-nowindow"]:original.ToArray(),false,"Using this game's existing controls. Lobby join order is not applied.",[]);
+        return new(m.Kind=="mame"?[..original,"-nowindow"]:original.ToArray(),false,notice,[]);
     }
-    public static NormalPlan Prepare(NormalManifest m,string[] original,SelectionSeal selection,string session,IConfigReader? configReader=null)
+    public static NormalPlan Prepare(NormalManifest m,string[] original,SelectionSeal selection,string session,IConfigReader? configReader=null,Func<IEnumerable<DuckProcess>>? duckStationProcesses=null,Pcsx2Launch.PreLobbyRead? pcsx2PreLobby=null,string? pcsx2Pin=null)
     {
         // Unknown games/options retain their exact vector and their ordinary save/config behavior.
         var fallback=Existing(m,original);
         if(selection.PlayerIndices.Count is <1 or >4)return fallback;
+        if(m.Kind==DuckStationLaunch.Kind)
+        {
+            // Only a manifest that carries the pinned launch copy may be mapped; a bare one is refused before any write.
+            if(/*guard:duckstation-plan-needs-copy*/m.DuckStation==null)throw new IOException("Invalid normal-play manifest");
+            // Before any write: a running DuckStation may be using the copy's settings and the shared saves.
+            if(/*guard:running-before-writes*/DuckStationLaunch.Running(m,duckStationProcesses))throw new IOException(DuckStationLaunch.RunningMessage);
+            try{return DuckStationLaunch.Prepare(m,original,selection);}
+            catch(Exception e)when(e is IOException or UnauthorizedAccessException or ArgumentException or InvalidOperationException){return Existing(m,original,DuckStationLaunch.Notice("unavailable"));}
+        }
+        if(m.Kind==Pcsx2Launch.Kind)
+        {
+            if(/*guard:pcsx2-plan-needs-copy*/m.Pcsx2==null)throw new IOException("Invalid normal-play manifest");
+            // Before any write: a running PCSX2 may be using the shared memory cards.
+            if(/*guard:pcsx2-running-before-writes*/Pcsx2Launch.Running(m,duckStationProcesses))throw new IOException(Pcsx2Launch.RunningMessage);
+            try{return Pcsx2Launch.Prepare(m,original,selection,pcsx2PreLobby,null,pcsx2Pin);}
+            catch(Exception e)when(e is IOException or UnauthorizedAccessException or ArgumentException or InvalidOperationException){return Existing(m,original,Pcsx2Launch.Notice("unavailable"));}
+        }
         if(m.ReferenceBinaries!=null&&m.ReferenceBinaries.Any(p=>ProtectedFile.Capture(p.Path).Sha256!=p.Sha256))return fallback;
         try
         {
@@ -212,48 +250,176 @@ internal sealed record NormalPlan(string[] Arguments,bool Assigned,string Notice
 
 internal static class NormalPlay
 {
-    public static async Task<bool> Run(NormalPackage package,string[] args,ITrialView view,CancellationToken cancel,Action hide,string? stateRoot=null,ITargetFactory? targetFactory=null)
+    public const int KeptSessionLogs=20;
+    public static string DefaultStateRoot=>Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"ControllerLobby","Sessions");
+    public static string UpdateNotice(string kind,string drift)=>(drift=="windows"?"Windows":kind=="mame"?"MAME":kind==DuckStationLaunch.Kind?"DuckStation":kind==XemuLaunch.Kind?"Xemu":kind==Pcsx2Launch.Kind?"PCSX2":"RetroArch")
+        +" was updated since ControllerLobby was set up, so this game starts with its existing controls. To use the lobby again, close LaunchBox and run \"Upgrade or Repair\" in the ControllerLobby.Setup folder inside your LaunchBox folder.";
+    /// <summary>The program to start and where: the plan's executable when it names one, always in the owner's emulator directory.</summary>
+    internal static (string Executable,string WorkingDirectory) LaunchTarget(NormalManifest m,NormalPlan plan)=>
+        (/*guard:plan-executable*/plan.Executable??m.Executable,/*guard:working-directory-is-emulator*/Path.GetDirectoryName(Path.GetFullPath(m.Executable))!);
+    internal static string? LobbyNote(Qualification q)=>q.Ok?null:"Join order will not be applied to this game.";
+    internal static string? LobbyNote(Pcsx2Launch.PreLobbyRead? initial)=>
+        /*guard:pcsx2-note-qualified*/Pcsx2Launch.Qualify(initial?.Owner).Ok?null:"Join order will not be applied to this game.";
+    /// <summary>Deletes all but the newest session folders. Runs while the exclusive lease is held, so no live session is pruned.</summary>
+    internal static void PruneSessions(string runs,string current,int keep)
     {
-        string state=stateRoot??Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"ControllerLobby","GoldenEyeFirstPlay");
-        _=ProtectedFile.Capture(Path.Combine(state,".path-check"));
-        Directory.CreateDirectory(Path.Combine(state,"lease"));
-        using var lease=FileSessionLease.Acquire(Path.Combine(state,"lease"));
-        if(lease==null)throw new IOException("Another session is active or an interrupted session needs inspection");
-        string session=Path.Combine(state,"normal-runs",Guid.NewGuid().ToString("N"));Directory.CreateDirectory(session);
-        using var log=new TrialLog(Path.Combine(session,"events.jsonl"));
-        PinnedXInputReader? reader=null;TrialSampler? sampler=null;bool samplerClosed=false,completed=false,lifetimeEntered=false;
+        // Housekeeping never stops a launch: an unreadable folder is left as it is.
         try
         {
+            if(!Directory.Exists(runs))return;
+            foreach(var old in new DirectoryInfo(runs).GetDirectories().Where(d=>!d.FullName.Equals(current,StringComparison.OrdinalIgnoreCase)&&(d.Attributes&FileAttributes.ReparsePoint)==0)
+                .OrderByDescending(d=>d.CreationTimeUtc).Skip(keep-1)) // guard:prune-sessions
+                try{old.Delete(true);}catch(IOException){}catch(UnauthorizedAccessException){}
+        }
+        catch(IOException){}catch(UnauthorizedAccessException){}
+    }
+    public static async Task<bool> Run(NormalPackage package,string[] args,ITrialView view,CancellationToken cancel,Action hide,string? stateRoot=null,ITargetFactory? targetFactory=null,
+        Func<IEnumerable<DuckProcess>>? duckStationProcesses=null,Func<Task<SelectionSeal?>>? selectForTest=null,Func<IPadObserver>? observerFactory=null,string? xemuPin=null,string? pcsx2Pin=null)
+    {
+        // duckStationProcesses stands in for the process list of whichever emulator this package launches.
+        bool duck=package.Manifest.Kind==DuckStationLaunch.Kind,xemu=package.Manifest.Kind==XemuLaunch.Kind,pcsx2=package.Manifest.Kind==Pcsx2Launch.Kind;string? refusal=null;
+        string busyMessage=xemu?XemuLaunch.RunningMessage:pcsx2?Pcsx2Launch.RunningMessage:DuckStationLaunch.RunningMessage;
+        bool DuckRunning(int except=-1)=>duck&&DuckStationLaunch.Running(package.Manifest,duckStationProcesses,except)
+            ||xemu&&/*guard:xemu-running*/XemuLaunch.Running(package.Manifest,duckStationProcesses,except)
+            ||pcsx2&&/*guard:pcsx2-running*/Pcsx2Launch.Running(package.Manifest,duckStationProcesses,except);
+        // PCSX2: the owner's files as read before the lobby; Start must find exactly these (contract 3.3).
+        Pcsx2Launch.PreLobbyRead? pcsx2PreLobby=pcsx2&&package.UpdateDrift==null?Pcsx2Launch.PreLobby(package.Manifest):null;
+        IPadObserver? observer=null,pendingObserver=null;IReadOnlyList<ControllerLobby.Xemu.ObservedPad>? baseline=null;
+        // The connected set at the seal is the Xemu baseline (contract 3.2); one function for the lobby loop and the test seam.
+        void SealBaseline(){try{if(observer!=null)baseline=/*guard:xemu-baseline-at-seal*/observer.Snapshot();}catch(Exception e)when(e is IOException or InvalidOperationException){baseline=null;}}
+        // Prepare checks again before its first write; a DuckStation that started in between is the same busy refusal.
+        string state=stateRoot??DefaultStateRoot;
+        _=ProtectedFile.Capture(Path.Combine(state,".path-check"));
+        Directory.CreateDirectory(Path.Combine(state,"lease"));
+        using var lease=FileSessionLease.Acquire(Path.Combine(state,"lease"),recoverInterrupted:true);
+        if(lease==null)throw new IOException("Another ControllerLobby game session is still running");
+        string runs=Path.Combine(state,"normal-runs"),session=Path.Combine(runs,Guid.NewGuid().ToString("N"));Directory.CreateDirectory(session);
+        PruneSessions(runs,session,KeptSessionLogs);
+        // Beta 1 kept its unpruned session logs under the prototype folder name; apply the same limit there.
+        if(stateRoot==null)PruneSessions(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"ControllerLobby","GoldenEyeFirstPlay","normal-runs"),"",KeptSessionLogs+1);
+        using var log=new TrialLog(Path.Combine(session,"events.jsonl"));
+        NormalPlan PrepareOrRefuse(SelectionSeal s)
+        {
+            if(xemu)
+            {
+                // Before the session file is written: a running Xemu holds the shared disk image.
+                if(DuckRunning()){refusal=busyMessage;return NormalPlan.Existing(package.Manifest,args);}
+                if(observer==null||baseline==null)return XemuLaunch.Existing(package.Manifest,args,session,XemuLaunch.Notice("unqualified"),null,xemuPin);
+                IReadOnlyList<ControllerLobby.Xemu.ObservedPad> now;
+                try{now=/*guard:xemu-reobserve*/observer.Snapshot();}
+                catch(Exception e)when(/*guard:xemu-snapshot-failure-normalized*/e is IOException or InvalidOperationException or ObjectDisposedException){log.Write("xemu-observer-failed",new{e.Message});return XemuLaunch.Existing(package.Manifest,args,session,XemuLaunch.Notice("observer-failed"),null,xemuPin);}
+                return XemuLaunch.Prepare(package.Manifest,args,s,baseline,now,session,null,xemuPin);
+            }
+            try{return NormalPlan.Prepare(package.Manifest,args,s,session,null,duckStationProcesses,pcsx2PreLobby,pcsx2Pin);}
+            catch(IOException e)when(/*guard:prepare-refusal-normalized*/(duck||pcsx2)&&e.Message==busyMessage){refusal=e.Message;return NormalPlan.Existing(package.Manifest,args);}
+        }
+        if(lease.RecoveredMarker!=null)log.Write("recovered-interrupted-session",new{Marker=lease.RecoveredMarker});
+        PinnedXInputReader? reader=null;TrialSampler? sampler=null;bool samplerClosed=false,completed=false,lifetimeEntered=false;
+        NormalPlan ExistingPlan()
+        {
+            // Y and an abandoned lobby: a running Xemu refuses before the existing-controls session file is written.
+            if(xemu&&/*guard:xemu-y-running-before-write*/DuckRunning()){refusal=busyMessage;return NormalPlan.Existing(package.Manifest,args);}
+            return xemu?XemuLaunch.Existing(package.Manifest,args,session,NormalPlan.ExistingNotice,null,xemuPin):NormalPlan.Existing(package.Manifest,args);
+        }
+        try
+        {
+            SelectionSeal? seal=null;NormalPlan plan;
+            // Xemu: the observer runs for the whole lobby session so SDL instance IDs stay comparable (contract 3.2).
+            if(xemu&&package.UpdateDrift==null)
+                try{observer=observerFactory!=null?observerFactory():new SdlPadObserver(Path.Combine(AppContext.BaseDirectory,"SDL3.dll"));}
+                catch(Exception e)when(e is IOException or DllNotFoundException or EntryPointNotFoundException or BadImageFormatException)
+                {
+                    log.Write("xemu-observer-unavailable",new{e.Message});observer=null;
+                    // A start that left its worker running keeps the cleanup status for the finally below.
+                    if(e is PadObserverStartException p)/*guard:xemu-pending-start-kept*/pendingObserver=p.Pending;
+                }
+            if(package.UpdateDrift is {} drift)
+            {
+                // The updated emulator or XInput is not qualified: never load the reader; launch unmapped.
+                plan=NormalPlan.Existing(package.Manifest,args,UpdateNotice(package.Manifest.Kind,drift));
+                samplerClosed=true;
+            }
+            else if(selectForTest!=null)
+            {
+                // Test seam: a synthetic selection in place of the XInput reader and the lobby loop.
+                seal=await selectForTest().ConfigureAwait(false);samplerClosed=true;
+                if(seal!=null)SealBaseline();
+                // Prepare's own check is the first one on the Start path and runs before any write.
+                plan=seal==null?ExistingPlan():PrepareOrRefuse(seal);
+            }
+            else
+            {
             reader=PinnedXInputReader.Open(package.Manifest.Reader);
-            sampler=new TrialSampler(reader,Path.Combine(session,"controllers.jsonl"),session,"normal-play",true);
+            sampler=new TrialSampler(reader,Path.Combine(session,"controllers.jsonl"),session,"normal-play",true,compactLog:true);
             var model=new LobbyJoinPresenter(sampler.Latest,4,normalPlay:true);
+            // Read-only look before the lobby, so it can say that join order will not apply. Nothing is written here.
+            string? lobbyNote=duck?LobbyNote(DuckStationLaunch.Qualify(DuckStationLaunch.ReadOwner(package.Manifest))):/*guard:pcsx2-note-in-lobby*/pcsx2?LobbyNote(pcsx2PreLobby):null;
+            string Say(string instruction)=>lobbyNote==null?instruction:lobbyNote+" "+instruction;
             var selected=new TaskCompletionSource<SelectionSeal>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var padExisting=new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            using var selectionCancel=CancellationTokenSource.CreateLinkedTokenSource(cancel);
             int selecting=1;
             sampler.Observed+=read=>{
                 if(Volatile.Read(ref selecting)==0)return;
-                model.Observe(read);view.Selecting(model.Cards,model.Instruction);
+                model.Observe(read);view.Selecting(model.Cards,Say(model.Instruction));
+                if(model.CancelRequested){try{selectionCancel.Cancel();}catch(ObjectDisposedException){}return;}
+                if(model.ExistingControlsRequested){padExisting.TrySetResult(true);return;}
                 if(model.Failure!=null)selected.TrySetException(new IOException(model.Failure));
-                if(model.Seal!=null){if(sampler.TryFreeze(read,model.Seal.ConnectedMask))selected.TrySetResult(model.Seal);else selected.TrySetException(new IOException("Controllers changed at confirmation"));}
+                if(model.Seal!=null)
+                {
+                    if(!sampler.TryFreeze(read,model.Seal.ConnectedMask)){selected.TrySetException(new IOException("Controllers changed at confirmation"));return;}
+                    SealBaseline();
+                    selected.TrySetResult(model.Seal);
+                }
             };
-            sampler.Start();view.Selecting([],model.Instruction);
-            SelectionSeal? seal=null;
-            using var selectionCancel=CancellationTokenSource.CreateLinkedTokenSource(cancel);
+            sampler.Start();view.Selecting([],Say(model.Instruction));
             var selectionWait=LobbySelectionAwaiter.Wait(selected.Task,()=>view.Alive&&sampler.Fresh,selectionCancel.Token);
-            bool existing=view.ExistingControlsRequested is {} request&&await Task.WhenAny(selectionWait,request).ConfigureAwait(false)==request;
+            var existingRequests=new List<Task>{padExisting.Task};if(view.ExistingControlsRequested is {} request)existingRequests.Add(request);
+            var first=await Task.WhenAny([selectionWait,..existingRequests]).ConfigureAwait(false);
+            bool existing=first!=selectionWait;
             Interlocked.Exchange(ref selecting,0);
             if(existing){selectionCancel.Cancel();try{await selectionWait.ConfigureAwait(false);}catch(OperationCanceledException){}}
             else seal=await selectionWait.ConfigureAwait(false);
-            var plan=seal==null?NormalPlan.Existing(package.Manifest,args):NormalPlan.Prepare(package.Manifest,args,seal,session);
+            plan=seal==null?ExistingPlan():PrepareOrRefuse(seal);
+            }
+            // One point for Start, Y and an update launch: a second DuckStation would share the first one's saves.
+            if(refusal==null&&/*guard:duckstation-running-refusal*/DuckRunning())refusal=busyMessage;
+            if(refusal!=null){log.Write("normal-play-refused",new{Reason=refusal});completed=true;}
+            else
+            {
             view.Status("Starting game",plan.Notice);
-            log.Write("normal-play-plan",new{package.Manifest.Kind,Arguments=plan.Arguments,plan.Assigned,plan.Notice,seal});
-            // Keep the notice visible before handing focus to the game; Esc still cancels.
-            await Task.Delay(1800,cancel).ConfigureAwait(false);
-            bool Gate()=>view.Alive&&!cancel.IsCancellationRequested&&package.Current()&&plan.Current()&&(seal==null||sampler.Fresh&&sampler.Latest.Sample.ConnectedMask==seal.ConnectedMask&&seal.PlayerIndices.All(i=>sampler.Latest.Sample.Buttons[i]==0));
-            string exe=package.Manifest.Executable;
-            var factory=targetFactory??NativeTargetFactory.WithCompleteCommandLine(exe,RetroArchPreparation.BuildCommandLine(exe,plan.Arguments),Path.GetDirectoryName(exe)!);
+            log.Write("normal-play-plan",new{package.Manifest.Kind,Arguments=plan.Arguments,plan.Assigned,plan.Notice,seal,package.UpdateDrift});
+            // Keep the notice visible before handing focus to the game; Esc still cancels. The update
+            // notice carries an instruction, so it stays longer.
+            await Task.Delay(package.UpdateDrift==null?1800:6000,cancel).ConfigureAwait(false);
+            // The gate runs before the target is created and again before it is resumed. A DuckStation that appeared
+            // during the notice, or between those two points, stops the launch; the host's own held target is excluded.
+            bool lateRunning=false,lateChanged=false;int ownPid=-1;
+            bool NotRunning(){if(/*guard:running-rechecked-at-gate*/DuckRunning(ownPid)){lateRunning=true;return false;}return true;}
+            // A mapped Xemu launch also requires the connected set to be the sealed one at both gates.
+            bool Unchanged()
+            {
+                if(!xemu||!plan.Assigned)return true;
+                try{var now=observer!.Snapshot();if(/*guard:xemu-gate-unchanged*/now.Count==baseline!.Count&&!now.Except(baseline).Any())return true;}
+                catch(Exception e)when(e is IOException or InvalidOperationException){}
+                lateChanged=true;return false;
+            }
+            bool Gate()=>view.Alive&&!cancel.IsCancellationRequested&&package.Current()&&plan.Current()&&(seal==null||sampler==null||sampler.Fresh&&sampler.Latest.Sample.ConnectedMask==seal.ConnectedMask&&seal.PlayerIndices.All(i=>sampler.Latest.Sample.Buttons[i]==0))&&NotRunning()&&Unchanged();
+            // The plan may name the launch copy; the working directory stays the owner's emulator directory either way.
+            var (exe,workingDirectory)=LaunchTarget(package.Manifest,plan);
+            var factory=targetFactory??NativeTargetFactory.WithCompleteCommandLine(exe,RetroArchPreparation.BuildCommandLine(exe,plan.Arguments),workingDirectory);
+            log.Write("normal-play-launch",new{Executable=exe,WorkingDirectory=workingDirectory});
             lifetimeEntered=true;
-            var result=await Task.Run(()=>NormalLifetime.Run(factory,Gate,()=>view.Alive&&!cancel.IsCancellationRequested,()=>{sampler.Dispose();samplerClosed=true;hide();},target=>targetFactory!=null||target is NativeTarget native&&native.QueryIdentity().ImagePath.Equals(exe,StringComparison.OrdinalIgnoreCase))).ConfigureAwait(false);
+            var result=await Task.Run(()=>NormalLifetime.Run(factory,Gate,()=>view.Alive&&!cancel.IsCancellationRequested,()=>{sampler?.Dispose();samplerClosed=true;hide();},target=>
+                {
+                    if(targetFactory!=null)return true;
+                    if(target is not NativeTarget native)return false;
+                    var held=native.QueryIdentity();ownPid=held.ProcessId;return held.ImagePath.Equals(exe,StringComparison.OrdinalIgnoreCase);
+                })).ConfigureAwait(false);
             log.Write("normal-play-ended",result);completed=result.CleanupConfirmed;
+            if(!result.Started&&lateRunning)refusal=busyMessage;
+            else if(!result.Started&&lateChanged)refusal=XemuLaunch.ChangedMessage;
+            }
         }
         catch(OperationCanceledException)when(!lifetimeEntered){log.Write("normal-play-cancelled",new{BeforeLaunch=true});completed=true;}
         finally
@@ -261,8 +427,14 @@ internal static class NormalPlay
             // Keep native reader loaded if sampler shutdown cannot be established.
             if(sampler!=null&&!samplerClosed){sampler.Dispose();samplerClosed=true;}else samplerClosed=true;
             if(samplerClosed)reader?.Dispose();
+            observer?.Dispose();pendingObserver?.Dispose();
+            // An observer worker still running means native cleanup is not confirmed: the session is not complete, so
+            // the next start recovers it as interrupted. The same holds for one whose start failed.
+            if(observer!=null&&!observer.ShutdownComplete||pendingObserver!=null&&!pendingObserver.ShutdownComplete){log.Write("xemu-observer-shutdown-incomplete",new{});/*guard:xemu-incomplete-shutdown-not-complete*/completed=false;}
         }
         if(completed){log.Write("normal-play-complete",new{SamplerClosed=samplerClosed});lease.Complete();}
+        // A refusal is a finished session with a message for the lobby window, not an interrupted one.
+        if(refusal!=null)throw new IOException(refusal);
         return completed;
     }
 }

@@ -36,11 +36,13 @@ public sealed class SetupWindow:Window
     private readonly TextBox details=new(){IsReadOnly=true,AcceptsReturn=true,TextWrapping=TextWrapping.Wrap,VerticalScrollBarVisibility=ScrollBarVisibility.Auto,Height=130};
     private readonly ProgressBar progress=new(){Height=5,IsIndeterminate=true,Visibility=Visibility.Collapsed,Margin=new(0,8,0,8)};
     private readonly StackPanel maintenance=new(){Orientation=Orientation.Horizontal};
-    private readonly Button verify,repair,remove;
+    private readonly Button verify,repair,remove,upgrade;
+    internal Button UpgradeButton=>upgrade;
     internal Button BrowseButton{get;}=Button("Browse…");
     internal Button InstallButton{get;}=Button("Install");
     internal Button CloseButton{get;}=Button("Close");
     internal string StatusText=>status.Text;
+    internal IEnumerable<CheckBox> ChoiceBoxes=>choices.Children.OfType<CheckBox>();
     private static Button Button(string text)=>new(){Content=text,Padding=new(20,9,20,9),Margin=new(0,0,10,0),MinWidth=100};
     public SetupWindow(Func<Task<ISetupEngine>> factory,Func<string?>? picker=null)
     {
@@ -60,14 +62,16 @@ public sealed class SetupWindow:Window
         var actions=new StackPanel{Orientation=Orientation.Horizontal,Margin=new(0,10,0,12)};
         InstallButton.Background=new SolidColorBrush(Color.FromRgb(31,76,139));InstallButton.Foreground=Brushes.White;
         actions.Children.Add(InstallButton);actions.Children.Add(CloseButton);content.Children.Add(actions);
-        verify=Button("Verify");repair=Button("Repair");remove=Button("Uninstall");
-        maintenance.Children.Add(verify);maintenance.Children.Add(repair);maintenance.Children.Add(remove);content.Children.Add(maintenance);
+        verify=Button("Verify");repair=Button("Repair");remove=Button("Uninstall");upgrade=Button("Upgrade");
+        upgrade.Background=new SolidColorBrush(Color.FromRgb(31,76,139));upgrade.Foreground=Brushes.White;
+        maintenance.Children.Add(upgrade);maintenance.Children.Add(verify);maintenance.Children.Add(repair);maintenance.Children.Add(remove);content.Children.Add(maintenance);
         content.Children.Add(new Expander{Header="Details and troubleshooting",Content=details,Margin=new(0,12,0,0)});
         Content=new ScrollViewer{Content=content,Background=Background,VerticalScrollBarVisibility=ScrollBarVisibility.Auto};
         BrowseButton.Click+=async(_,_)=>{string? root=this.picker();if(root!=null&&controller!=null)await controller.ChooseFolder(root);};
         InstallButton.Click+=async(_,_)=>{if(controller!=null)await controller.Execute("install");};
         verify.Click+=async(_,_)=>{if(controller!=null)await controller.Execute("verify");};
         repair.Click+=async(_,_)=>{if(controller!=null)await controller.Execute("repair");};
+        upgrade.Click+=async(_,_)=>{if(controller!=null)await controller.Execute("upgrade");};
         remove.Click+=async(_,_)=>
         {
             if(controller!=null&&MessageBox.Show(this,"Remove ControllerLobby and restore its LaunchBox entries?","Uninstall ControllerLobby",MessageBoxButton.YesNo,MessageBoxImage.Question)==MessageBoxResult.Yes)
@@ -98,13 +102,14 @@ public sealed class SetupWindow:Window
         CloseButton.IsEnabled=!busy;CloseButton.Content=controller?.Complete==true?"Done":"Close";
         progress.Visibility=busy?Visibility.Visible:Visibility.Collapsed;
         maintenance.Visibility=controller?.Installed==true?Visibility.Visible:Visibility.Collapsed;
-        verify.IsEnabled=repair.IsEnabled=remove.IsEnabled=controller?.CanMaintain??false;
+        remove.IsEnabled=controller?.CanMaintain??false;verify.IsEnabled=repair.IsEnabled=controller?.CanRepair??false;
+        upgrade.Visibility=controller?.NeedsUpgrade==true?Visibility.Visible:Visibility.Collapsed;upgrade.IsEnabled=controller?.CanUpgrade??false;
         choices.Children.Clear();
         if(controller==null)return;
         folder.Text=controller.Root.Length>0?controller.Root:"No folder selected";status.Text=controller.Status;details.Text=controller.Details;
         foreach(var entry in controller.Entries)
         {
-            var box=new CheckBox{Content=new TextBlock{Text=entry.Title+" ("+entry.Kind+")\n"+entry.ApplicationPath,TextWrapping=TextWrapping.Wrap},IsEnabled=entry.Eligible&&!busy,IsChecked=controller.Selected.Contains(entry.Id),Margin=new(0,5,0,5),ToolTip=entry.Eligible?null:entry.Reason};
+            var box=new CheckBox{Content=new TextBlock{Text=entry.Title+" ("+entry.Kind+")\n"+entry.ApplicationPath,TextWrapping=TextWrapping.Wrap},IsEnabled=entry.Eligible&&!busy&&!controller.RecoveryBlocked,IsChecked=controller.Selected.Contains(entry.Id),Margin=new(0,5,0,5),ToolTip=entry.Eligible?null:entry.Reason};
             box.Click+=(_,_)=>controller.Select(entry.Id,box.IsChecked==true);choices.Children.Add(box);
         }
     }

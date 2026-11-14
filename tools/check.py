@@ -18,6 +18,8 @@ def main():
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--dotnet', default='dotnet')
     ap.add_argument('--cc', default='gcc', help='MinGW-w64 x64 GCC')
+    ap.add_argument('--pcsx2-release', type=Path, required=True,
+                    help='pcsx2-v2.7.182-windows-x64-Qt.7z extracted (github.com/PCSX2/pcsx2 release v2.7.182); copied, never executed')
     a = ap.parse_args()
     output, build = a.output.resolve(), a.build.resolve()
     if output.exists():
@@ -54,13 +56,23 @@ def main():
     for name, args in (
         ('NormalPlayChecks', []), ('BigBoxWindowChecks', []),
         ('LobbyWakeChecks', [str(native / 'fixture.dll')]), ('MameProfileChecks', []), ('RetroArchChecks', []),
+        ('DuckStationChecks', []),
+        ('XemuChecks', []),
+        ('Pcsx2Checks', []),
     ):
         run(name, [a.dotnet, 'run', '--project', str(ROOT / 'harness' / name / (name + '.csproj')),
                    '-c', 'Release', '--', *args])
     py = [sys.executable, '-I', '-B']
     run('publication', [*py, str(ROOT / 'harness/test_publication.py')])
     run('removal-status', [*py, str(ROOT / 'harness/test_bigbox_removal_status.py')])
+    run('setup-bridge', [*py, str(ROOT / 'harness/test_setup_bridge.py'), str(output / 'setup-bridge')])
     run('schema1', [*py, str(ROOT / 'harness/test_bigbox_install.py'), str(output / 'schema1')])
+    run('pcsx2-inventory', [*py, str(ROOT / 'harness/test_pcsx2_inventory.py')])
+    run('xemu-toml-oracle', [*py, str(ROOT / 'harness/test_xemu_toml_oracle.py'), a.dotnet, str(output / 'xemu-toml-oracle')])
+    run('duckstation-install', [*py, str(ROOT / 'harness/test_duckstation_install.py'), str(output / 'duckstation-install'),
+                                 str(build / 'package')])
+    run('pcsx2-install', [*py, str(ROOT / 'harness/test_pcsx2_install.py'), str(output / 'pcsx2-install'),
+                           str(build / 'package'), str(a.pcsx2_release.resolve())])
     run('portable', [*py, str(ROOT / 'harness/test_portable_beta_install.py'), str(output / 'portable'),
                      '', str(a.python_embed.resolve())])
     # Remove the required-root guard in a scratch copy. The same test must go red.

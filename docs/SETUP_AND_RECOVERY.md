@@ -1,8 +1,8 @@
-# ControllerLobby Beta 1 — Setup, Repair, and Uninstall Guide
+# ControllerLobby 1.0 — Setup, Repair, and Uninstall Guide
 
-ControllerLobby Beta 1 adds pre-launch XInput controller assignment for **LaunchBox / BigBox** on **Windows 10 / 11 (x64)** for **MAME 0.279** and **RetroArch** using up to **4 connected XInput controllers**.
+ControllerLobby adds pre-launch XInput controller assignment for **LaunchBox / BigBox** on **Windows 10 / 11 (x64)** for **RetroArch**, **MAME 0.279**, **DuckStation**, **PCSX2 2.7.182** and **Xemu** using up to **4 connected XInput controllers**.
 
-> **Deployment & Local State Scope:** Beta 1 does **not** require HidHide or kernel drivers. All deployed emulator wrapper files and manual installation tools are written inside your selected `<LaunchBox>` root (`<EmulatorDir>\ControllerLobby.BigBox\` and `<LaunchBox>\ControllerLobby.Setup\`). Outside `<LaunchBox>`, ControllerLobby uses `%LOCALAPPDATA%\ControllerLobby\` for runtime session/refusal state and logs, temporary uninstall recovery-runner staging (`%LOCALAPPDATA%\ControllerLobby\RecoveryRunner\<pin16>\`), and post-uninstall record archiving (`%LOCALAPPDATA%\ControllerLobby\SetupHistory\<id>\`).
+> **Deployment & Local State Scope:** ControllerLobby does **not** require HidHide or kernel drivers. All deployed emulator wrapper files and manual installation tools are written inside your selected `<LaunchBox>` root (`<EmulatorDir>\ControllerLobby.BigBox\` and `<LaunchBox>\ControllerLobby.Setup\`). Outside `<LaunchBox>`, ControllerLobby uses `%LOCALAPPDATA%\ControllerLobby\` for runtime session/refusal state and logs, temporary uninstall recovery-runner staging (`%LOCALAPPDATA%\ControllerLobby\RecoveryRunner\<pin16>\`), and post-uninstall record archiving (`%LOCALAPPDATA%\ControllerLobby\SetupHistory\<id>\`).
 
 ---
 
@@ -13,8 +13,11 @@ ControllerLobby Beta 1 adds pre-launch XInput controller assignment for **Launch
 - **Emulators Configured in LaunchBox (`Data\Emulators.xml`):**
   - **RetroArch** (`retroarch.exe`)
   - **MAME 0.279** (`mame.exe` or `mame64.exe`)
-- **Folder layout:** Emulator executables must be in subfolders inside the selected LaunchBox folder, and emulator entries must use relative paths such as `Emulators\MAME\mame.exe`. External emulator folders, absolute paths and parent-directory traversal are not supported by Beta 1 setup. Selected entries must use distinct emulator folders.
-- **Close LaunchBox, BigBox, RetroArch, and MAME** before running setup, repair, or uninstall.
+  - **DuckStation** (`duckstation-qt-x64-ReleaseLTCG.exe`; mappings qualified against `0.1-9903-g8f0c9dd17`, no version gate), with its settings in `Documents\DuckStation`; portable mode is refused
+  - **PCSX2 2.7.182** (`pcsx2-qt.exe`), portable install only (`portable.ini` beside the exe); another build is refused
+  - **Xemu** (`xemu.exe`); join-order mapping only for 0.8.135, other builds start as LaunchBox would
+- **Folder layout:** Emulator executables must be in subfolders inside the selected LaunchBox folder, and emulator entries must use relative paths such as `Emulators\MAME\mame.exe`. External emulator folders, absolute paths and parent-directory traversal are not supported by Setup. Selected entries must use distinct emulator folders.
+- **Close LaunchBox, BigBox and your emulators** before running setup, repair, or uninstall.
 
 ---
 
@@ -43,11 +46,11 @@ the publisher or guarantee safety. The extracted package also includes
 
 ---
 
-## 3. Installing ControllerLobby Beta 1
+## 3. Installing ControllerLobby
 
 Download the guided installer from the official release linked above. Open
 `ControllerLobby.Setup.exe`, click **Browse**, select your LaunchBox folder,
-confirm the available MAME/RetroArch entries, and click **Install**. Multiple
+confirm the available emulator entries, and click **Install**. Multiple
 available entries of the same kind require an explicit selection. Setup checks
 the proposed changes before installation. If an operation fails, open **Details**
 for its recovery information; a failure does not mean installation completed.
@@ -72,7 +75,7 @@ isolated Python 3.13.1 runtime inside `python\`) or Command Prompt / PowerShell.
    - The installer verifies all package hashes, probes `System32\XInput1_4.dll` (including export provider resolution for `XInputGetState`), deploys the runtime payload and locally generated `normal.json` and `bigbox.json` manifests into `<EmulatorDir>\ControllerLobby.BigBox\`, runs `ControllerLobby.BigBox.exe --verify-only` at each final deployed location, persists a self-contained management copy under `<LaunchBox>\ControllerLobby.Setup\`, and updates only the selected `<ApplicationPath>` entries in `Data\Emulators.xml` via exclusive-lock compare-and-swap.
 
 ### Option B: Command Line (Explicit Entry Selection)
-If your `Data\Emulators.xml` contains multiple RetroArch or MAME entries, automatic discovery refuses to guess and asks you to pass the target entry GUIDs or unambiguous titles via `--entries`:
+If your `Data\Emulators.xml` contains multiple entries of one supported emulator, automatic discovery refuses to guess and asks you to pass the target entry GUIDs or unambiguous titles via `--entries`:
 
 ```cmd
 python\python.exe -I -B bigbox_install.py discover --root "D:\LaunchBox"
@@ -84,10 +87,11 @@ python\python.exe -I -B bigbox_install.py install  --root "D:\LaunchBox" --entri
 
 ## 4. Lobby Controls During Game Launch
 
-When you launch a configured RetroArch or MAME game from LaunchBox or BigBox:
+When you launch a game from LaunchBox or BigBox with a configured emulator:
 - **Join Lobby:** Press **Start** on any connected XInput controller (`XInput 0..3`) to claim the next player slot (Player 1..4).
 - **Launch Game:** Once at least Player 1 has joined, Player 1 presses **Start** a second time and then **releases all selected buttons** to start the emulator.
-- **Cancel Launch:** Press **Esc** on the keyboard or click the **Cancel** control in the normal lobby window to abort the launch and return to LaunchBox / BigBox.
+- **Cancel Launch:** Hold **Back** on any connected controller for one second, press **Esc** on the keyboard, or click **Cancel** to abort the launch and return to LaunchBox / BigBox.
+- **Bypass ControllerLobby:** Hold **Y** on any connected controller for one second or click **Y - Bypass ControllerLobby** to launch without applying lobby join order. A button that is already held when the lobby opens must be released and pressed again.
 - **Qualified Mapping & Existing-Controls Fallback:** ControllerLobby inspects the launch arguments and configuration before applying per-launch controller slot mapping. When arguments or custom configurations are outside the qualified mapping path, ControllerLobby falls back to launching the emulator with your existing controls rather than forcing an incompatible override.
 
 ---
@@ -119,13 +123,15 @@ This folder contains:
 ControllerLobby pins the SHA-256 hash of your configured `retroarch.exe` / `mame.exe` and `System32\XInput1_4.dll` inside each entry's `<EmulatorDir>\ControllerLobby.BigBox\normal.json` manifest and `<LaunchBox>\ControllerLobby.Setup\active-plan.json`.
 
 ### What happens when you update RetroArch, MAME, or Windows?
-- `Verify installation.cmd` (exit code `5` on mismatch) and normal launches detect when an emulator binary or `System32\XInput1_4.dll` has changed since installation or last repair.
+- `Verify installation.cmd` (exit code `5` on mismatch) detects when an emulator binary or `System32\XInput1_4.dll` has changed since installation or last repair.
+- A game launched after such an update skips the lobby and starts with its existing controls, showing a notice to run **Upgrade or Repair**. ControllerLobby's own files are still checked; if they changed, the launch stops with a short message asking you to run **Verify**.
 - **Uninstalling NEVER requires the old emulator or OS binary hashes to match.** You can always run `Uninstall.cmd` after updating RetroArch, MAME, or Windows.
 
 ### Running Repair (`Upgrade or Repair.cmd`)
 To re-validate updated `retroarch.exe`, `mame.exe`, or `System32\XInput1_4.dll` binaries (or restore a missing file in `<EmulatorDir>\ControllerLobby.BigBox\`):
 1. Close LaunchBox, BigBox, RetroArch, and MAME.
 2. Run **`<LaunchBox>\ControllerLobby.Setup\Upgrade or Repair.cmd`** (or `python\python.exe -I -B bigbox_install.py repair --root "D:\LaunchBox"`).
+   - **Not available while DuckStation or PCSX2 is installed:** Repair does not rebuild their launch copies yet and refuses. Run `Uninstall.cmd`, then install again.
 3. `repair` reconciles any single interrupted repair generation using durable `install-record.txt.genpre-<hash16>.bin` preimages, verifies `ControllerLobby.Setup\payload\`, restores any missing immutable payload file, re-hashes your emulator and `XInput1_4.dll` binaries, stages and activates the new `normal.json` and `bigbox.json` generation, re-runs `ControllerLobby.BigBox.exe --verify-only`, and increments `Generation` in `active-plan.json`.
    - **Foreign-Edit & Stage Protection:** If any deployed file in `<EmulatorDir>\ControllerLobby.BigBox\` was modified with unknown/foreign bytes, an unowned file was placed in `<EmulatorDir>\ControllerLobby.BigBox\`, or a `.cl-<nonce>.part` stage file contains unexpected or non-schema fields, `repair` refuses (exit code `3`) before modifying or deleting any file and preserves the unexpected file untouched.
    - **Interrupted-Rollback Boundary:** If a repair generation was interrupted and a *second* interruption occurs while rolling back that generation, automatic recovery stops safely (exit code `3` on `repair`/`remove`, exit code `5` on `verify`) with all user files, journal entries, and `.genpre` preimages preserved. Follow **Section 8** below to complete rollback manually.
@@ -161,11 +167,11 @@ When this boundary is detected:
 - `Verify installation.cmd` exits with code **`5`** and `Upgrade or Repair.cmd` / `Uninstall.cmd` stop safely with exit code **`3`** before modifying or deleting any file.
 - No installation corruption or user-data loss occurs: all user files, unrelated/foreign files, `install-record.txt`, and `install-record.txt.genpre-<hash16>.bin` preimages remain intact inside `<LaunchBox>\ControllerLobby.Setup\`.
 - The diagnostic message identifies the interrupted generation number `<g>`:
-  `Rollback of generation <g> was interrupted; automatic recovery is unavailable. All user files, journal, and preimages are preserved in ControllerLobby.Setup; follow the manual recovery procedure in docs/BETA_SETUP_AND_RECOVERY.md.`
+  `Rollback of generation <g> was interrupted; automatic recovery is unavailable. All user files, journal, and preimages are preserved in ControllerLobby.Setup; follow the manual recovery procedure in docs/SETUP_AND_RECOVERY.md.`
 
 ### Step-by-Step Manual Rollback Procedure
 
-1. **Close Frontends and Emulators:** Ensure `LaunchBox.exe`, `BigBox.exe`, `retroarch.exe`, and `mame.exe` are closed.
+1. **Close Frontends and Emulators:** Ensure `LaunchBox.exe`, `BigBox.exe` and every selected emulator (`retroarch.exe`, `mame.exe`, DuckStation, `pcsx2-qt.exe`, `xemu.exe`) are closed.
 2. **Inspect `install-record.txt`:** Open `<LaunchBox>\ControllerLobby.Setup\install-record.txt` and locate the trailing `GEN PENDING <g> <nonce> <old_sha> <new_sha> *<target_path>` lines for the interrupted generation `<g>`.
 3. **Restore Each Target from Its `.genpre` Preimage and Remove Its Owned `.part` Stage:**
    For each `GEN PENDING <g> <nonce> <old_sha> <new_sha> *<target_path>` line in generation `<g>`:

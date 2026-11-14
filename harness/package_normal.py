@@ -1,4 +1,4 @@
-"""Build an immutable portable Beta 1 installer package (Schema 2); does not install or launch games.
+"""Build an immutable portable installer package (Schema 2); does not install or launch games.
 Intakes the accepted flat self-contained win-x64 runtime payload (e.g. beta-runtime-candidate-02)
 with recursive file-set/hash equality and reparse/nested-entry refusal.
 """
@@ -196,7 +196,7 @@ def main() -> None:
         source_manifest = {
             "Commit": commit,
             "Candidate": True,
-            "Scope": "portable beta-1 installer package; MAME 0.279 and RetroArch only",
+            "Scope": "portable installer package; MAME 0.279 and RetroArch only",
             "Files": inputs,
         }
         (dest_payload / "source-manifest.json").write_text(
@@ -212,17 +212,17 @@ def main() -> None:
     populate_python_runtime(python_src, dest_python)
 
     # 3. Copy installer transaction scripts.
-    for script in ("bigbox_install.py", "shim_install.py", "setup_bridge.py"):
+    for script in ("bigbox_install.py", "shim_install.py", "setup_bridge.py", "pcsx2_inventory.py"):
         shutil.copyfile(repo / "harness" / script, out / script)
 
-    # 4. Copy Beta 1 documentation and third-party license notices.
+    # 4. Copy documentation and third-party license notices.
     dest_docs = out / "docs"
     dest_docs.mkdir()
     for doc_name in (
-        "BETA_SETUP_AND_RECOVERY.md",
-        "BETA_COMPATIBILITY_MATRIX.md",
-        "BETA_RELEASE_NOTES.md",
-        "BETA_ISSUE_TEMPLATE.md",
+        "SETUP_AND_RECOVERY.md",
+        "COMPATIBILITY_MATRIX.md",
+        "RELEASE_NOTES.md",
+        "ISSUE_TEMPLATE.md",
         "THIRD_PARTY_NOTICES.md",
         "MAME_DEFAULTS_LICENSE.txt",
     ):
@@ -230,13 +230,14 @@ def main() -> None:
         if src_doc.is_file():
             shutil.copyfile(src_doc, dest_docs / doc_name)
 
-    for name in ("LICENSE", "README.md"):
+    # README links CHANGELOG.md, and docs/RELEASE_NOTES.md links ../CHANGELOG.md.
+    for name in ("LICENSE", "README.md", "CHANGELOG.md"):
         shutil.copyfile(repo / name, out / name)
 
     dest_notices = out / "notices"
     dest_notices.mkdir()
     shutil.copyfile(dest_python / "LICENSE.txt", dest_notices / "PYTHON_LICENSE.txt")
-    for notice_name in ("THIRD_PARTY_NOTICES.md", "DOTNET_LICENSE.txt", "DOTNET_THIRD_PARTY_NOTICES.txt", "MAME_DEFAULTS_LICENSE.txt"):
+    for notice_name in ("THIRD_PARTY_NOTICES.md", "DOTNET_LICENSE.txt", "DOTNET_THIRD_PARTY_NOTICES.txt", "MAME_DEFAULTS_LICENSE.txt", "SDL3_LICENSE.txt"):
         if (repo / "docs" / notice_name).is_file():
             shutil.copyfile(repo / "docs" / notice_name, dest_notices / notice_name)
 
@@ -264,9 +265,9 @@ def main() -> None:
 
     pkg_obj = {
         "Schema": 2,
-        "PackageVersion": "0.1.0-beta.1",
+        "PackageVersion": "1.0.0",
         "Architecture": "win-x64",
-        "AllowedKinds": ["retroarch", "mame"],
+        "AllowedKinds": ["retroarch", "mame", "duckstation", "xemu", "pcsx2"],
         "RuntimeProvenance": {
             "Layout": "flat-self-contained-win-x64",
             "FileCount": len(payload_files),

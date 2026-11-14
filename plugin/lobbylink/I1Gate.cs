@@ -9,7 +9,7 @@ namespace ControllerLobby.LobbyLink
 
     public static class I1Gate
     {
-        // Synthetic IDs for the retained legacy integration gate. Normal Beta play discovers IDs dynamically.
+        // Synthetic IDs for the retained legacy integration gate. Normal play discovers IDs dynamically.
         public const string Smb3GameId = "33333333-3333-4333-8333-333333333333";
         public const string MkGameId = "44444444-4444-4444-8444-444444444444";
         public const string RetroArchId = "11111111-1111-4111-8111-111111111111";

@@ -87,7 +87,60 @@ internal static class Program
             window.InstallButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));Pump(()=>window.CloseButton.Content.ToString()=="Done");
             Need(!window.InstallButton.IsEnabled&&window.StatusText.Contains("all set"),"success view not complete");Render(window,Path.Combine(output,"setup-done.png"));window.Close();
         });
+        Check("actual-window-recovery-pending-disables-choices",()=>
+        {
+            var e=new Fake{LeftoverState=true};var window=new SetupWindow(()=>Task.FromResult<ISetupEngine>(e));window.Initialize().GetAwaiter().GetResult();window.SelectFolder(@"D:\SyntheticLaunchBox").GetAwaiter().GetResult();
+            var boxes=window.ChoiceBoxes.ToArray();
+            Need(boxes.Length==2&&boxes.All(b=>!b.IsEnabled&&b.IsChecked!=true)&&!window.InstallButton.IsEnabled&&window.StatusText.Contains("did not finish"),"recovery-pending view allows a choice or Install");window.Close();
+        });
         app.Shutdown();
+        // --- v1 upgrade and reinstall ---
+        SetupController Older(Fake e,string[]? ids=null){e.Installed=true;e.InstalledPin=new string('B',64);e.InstalledIds=ids??["synthetic-mame"];var c=new SetupController(e);c.ChooseFolder(@"D:\SyntheticLaunchBox").GetAwaiter().GetResult();return c;}
+        Check("uninstall-command-line-keeps-awkward-paths-quoted",()=>{
+            string dir=Path.Combine(output,"Launch Box (x86) & more","ControllerLobby.Setup");Directory.CreateDirectory(dir);string cmd=Path.Combine(dir,"Uninstall.cmd");
+            File.WriteAllText(cmd,"@echo off\r\necho \"%~dp0\"\r\nexit /b 7\r\n");
+            var start=new ProcessStartInfo(Path.Combine(Environment.SystemDirectory,"cmd.exe")){UseShellExecute=false,CreateNoWindow=true,RedirectStandardOutput=true,RedirectStandardError=true,Arguments=SetupEngine.UninstallArguments(cmd)};
+            using var process=Process.Start(start)!;string text=process.StandardOutput.ReadToEnd()+process.StandardError.ReadToEnd();process.WaitForExit();
+            Need(process.ExitCode==7&&text.Contains("\""+dir),"uninstaller not started from an awkward path: "+process.ExitCode+" "+text.Trim());});
+        Check("same-version-install-offers-repair-not-upgrade",()=>{var e=new Fake{Installed=true};e.InstalledPin=e.Pin;e.InstalledIds=["synthetic-mame"];var c=new SetupController(e);c.ChooseFolder(@"D:\SyntheticLaunchBox").GetAwaiter().GetResult();Need(!c.NeedsUpgrade&&c.CanRepair&&!c.CanUpgrade,"same version offered upgrade");});
+        Check("pre-upgrade-install-without-pin-offers-no-upgrade",()=>{var e=new Fake{Installed=true};var c=new SetupController(e);c.ChooseFolder(@"D:\SyntheticLaunchBox").GetAwaiter().GetResult();Need(!c.NeedsUpgrade&&c.CanRepair,"unknown pin treated as upgrade");});
+        Check("older-version-offers-upgrade-and-disables-repair",()=>{var e=new Fake();var c=Older(e);Need(c.NeedsUpgrade&&c.CanUpgrade&&!c.CanRepair&&c.Status.Contains("Upgrade"),"older install not offered upgrade");c.Execute("repair").GetAwaiter().GetResult();c.Execute("verify").GetAwaiter().GetResult();Need(e.Calls.Count==0,"new engine verified or repaired another version's install");});
+        Check("upgrade-uses-installed-uninstaller-then-installs-same-choices",()=>{var e=new Fake();var c=Older(e);c.Execute("upgrade").GetAwaiter().GetResult();
+            Need(e.Calls.SequenceEqual(new[]{"remove-installed","preview","install"})&&e.CallIds[2].SequenceEqual(new[]{"synthetic-mame"})&&c.Complete&&c.Status.StartsWith("Upgrade complete")&&e.InstalledPin==e.Pin,"upgrade order, choices or result wrong: "+string.Join(",",e.Calls));});
+        Check("upgrade-removal-failure-installs-nothing",()=>{var e=new Fake{RemoveExit=5};var c=Older(e);c.Execute("upgrade").GetAwaiter().GetResult();Need(e.Calls.SequenceEqual(new[]{"remove-installed"})&&!c.Complete&&c.Status.Contains("nothing new was installed"),"install ran after a failed removal");});
+        Check("upgrade-with-unavailable-choice-stops-before-install",()=>{var e=new Fake{Entries=[Choices[0],Choices[1] with{Eligible=false,Reason="missing"}]};var c=Older(e,["synthetic-retro","synthetic-mame"]);c.Execute("upgrade").GetAwaiter().GetResult();Need(e.Calls.SequenceEqual(new[]{"remove-installed"})&&!c.Complete&&c.Status.Contains("Choose your emulators"),"upgrade silently changed choices");});
+        Check("upgrade-install-failure-says-removed-and-allows-retry",()=>{var e=new Fake{InstallExit=3};var c=Older(e);c.Execute("upgrade").GetAwaiter().GetResult();Need(!c.Complete&&c.Status.Contains("couldn't be installed")&&c.Status.Contains("uses your emulators directly")&&c.CanInstall&&c.Selected.SetEquals(new[]{"synthetic-mame"}),"failed upgrade install not reported or not retryable");});
+        // The upgrade's new install fails with RECOVERY INCOMPLETE and keeps its record.
+        Check("upgrade-incomplete-rollback-with-record-is-not-direct-launch",()=>{var e=new Fake{InstallExit=3,Incomplete=true,PartialRecord=true};var c=Older(e);c.Execute("upgrade").GetAwaiter().GetResult();
+            Need(!c.Complete&&c.Installed&&!c.CanInstall&&c.CanMaintain&&!c.Status.Contains("uses your emulators directly")&&c.Status.Contains("still recorded")&&c.Details.Contains("RECOVERY INCOMPLETE"),"incomplete rollback with a record shown as direct launch: "+c.Status);});
+        Check("upgrade-incomplete-rollback-without-record-offers-no-retry",()=>{var e=new Fake{InstallExit=3,Incomplete=true};var c=Older(e);c.Execute("upgrade").GetAwaiter().GetResult();
+            Need(!c.Complete&&!c.Installed&&!c.CanInstall&&!c.Status.Contains("uses your emulators directly")&&c.Status.Contains("couldn't confirm"),"incomplete rollback without a record shown as direct launch: "+c.Status);
+            // Ticking a box must not re-enable Install.
+            c.Select("synthetic-mame",true);c.Execute("install").GetAwaiter().GetResult();
+            Need(c.RecoveryBlocked&&!c.CanInstall&&c.Selected.Count==0&&e.Calls.Count(a=>a=="install")==1,"checkbox re-enabled install after an unconfirmed rollback: "+string.Join(",",e.Calls));});
+        Check("unconfirmed-rollback-survives-same-folder-refresh",()=>{var e=new Fake{InstallExit=3,Incomplete=true};var c=Older(e);c.Execute("upgrade").GetAwaiter().GetResult();
+            foreach(bool? report in new bool?[]{null,true})
+            {
+                e.LeftoverState=report;c.ChooseFolder(@"D:\SyntheticLaunchBox\.").GetAwaiter().GetResult();c.Select("synthetic-mame",true);c.Execute("install").GetAwaiter().GetResult();
+                Need(c.RecoveryBlocked&&!c.CanInstall&&c.Status.Contains("did not finish")&&e.Calls.Count(a=>a=="install")==1,"refresh with RecoveryPending="+(report?.ToString()??"unreported")+" cleared the block");
+            }});
+        Check("confirmed-recovery-on-refresh-allows-install-again",()=>{var e=new Fake{InstallExit=3,Incomplete=true};var c=Older(e);c.Execute("upgrade").GetAwaiter().GetResult();
+            e.LeftoverState=false;e.InstallExit=0;e.Incomplete=false;c.ChooseFolder(@"D:\SyntheticLaunchBox").GetAwaiter().GetResult();
+            Need(!c.RecoveryBlocked&&c.CanInstall,"confirmed recovery did not release the block");c.Execute("install").GetAwaiter().GetResult();
+            Need(c.Complete&&e.Calls.Count(a=>a=="install")==2,"install after confirmed recovery did not run");});
+        Check("reopened-setup-blocks-when-folder-reports-leftover-state",()=>{var e=new Fake{LeftoverState=true};var c=new SetupController(e);c.ChooseFolder(@"D:\SyntheticLaunchBox").GetAwaiter().GetResult();c.Select("synthetic-mame",true);
+            Need(c.RecoveryBlocked&&!c.CanInstall&&c.Selected.Count==0&&c.Status.Contains("did not finish"),"leftover install state not blocked on a fresh Setup");});
+        Check("unreadable-state-block-survives-unreported-refresh",()=>{var e=new Fake{InstallExit=3,DiscoverFailsAfterInstall=true};var c=Older(e);c.Execute("upgrade").GetAwaiter().GetResult();
+            e.DiscoverFailsAfterInstall=false;c.ChooseFolder(@"D:\SyntheticLaunchBox").GetAwaiter().GetResult();
+            Need(c.RecoveryBlocked&&!c.CanInstall,"unreadable state forgotten on a refresh that reports nothing");});
+        Check("install-incomplete-rollback-with-record-offers-maintenance",()=>{var e=new Fake{InstallExit=3,Incomplete=true,PartialRecord=true};var c=new SetupController(e);c.ChooseFolder(@"D:\SyntheticLaunchBox").GetAwaiter().GetResult();c.Execute("install").GetAwaiter().GetResult();
+            Need(!c.Complete&&c.Installed&&!c.CanInstall&&c.CanMaintain&&c.Status.StartsWith("Setup couldn't finish"),"failed install left a record but install retry offered: "+c.Status);});
+        Check("failed-install-with-unreadable-state-offers-nothing",()=>{var e=new Fake{InstallExit=3,DiscoverFailsAfterInstall=true};var c=Older(e);c.Execute("upgrade").GetAwaiter().GetResult();
+            Need(!c.Complete&&!c.CanInstall&&!c.CanMaintain&&!c.Busy&&c.Status.Contains("couldn't check")&&!c.Status.Contains("uses your emulators directly"),"unknown state after a failed install offered an action: "+c.Status);});
+        Check("remove-of-older-version-uses-installed-uninstaller",()=>{var e=new Fake();var c=Older(e);c.Execute("remove").GetAwaiter().GetResult();Need(e.Calls.SequenceEqual(new[]{"remove-installed"}),"new engine removed an older install");});
+        Check("remove-then-reinstall-other-emulators-in-same-window",()=>{var e=new Fake{Installed=true};e.InstalledPin=e.Pin;e.InstalledIds=["synthetic-mame"];var c=new SetupController(e);c.ChooseFolder(@"D:\SyntheticLaunchBox").GetAwaiter().GetResult();
+            c.Execute("remove").GetAwaiter().GetResult();Need(e.Calls.SequenceEqual(new[]{"remove"})&&!c.Installed&&c.CanInstall&&c.Selected.Count==2,"remove did not return to selection");
+            c.Execute("install").GetAwaiter().GetResult();Need(e.CallIds.Last().Length==2&&c.Complete,"reinstall did not use the new selection");});
         Console.WriteLine($"Cases={pass+fail} Passed={pass} Failed={fail}; M/synthetic engine and archive fixtures, actual offscreen WPF view; no live configuration used");
         return fail==0?0:1;
     }
@@ -98,8 +151,22 @@ internal static class Program
     }
     private sealed class Fake:ISetupEngine
     {
-        public IReadOnlyList<EmulatorChoice> Entries=Choices;public bool Installed;public int PreviewExit,InstallExit;public TaskCompletionSource<SetupResult>? Pending;public List<string> Calls=[];
-        public Task<SetupDiscovery> Discover(string root)=>Task.FromResult(new SetupDiscovery(Installed,Entries));
-        public Task<SetupResult> Run(string action,string root,IReadOnlyList<string> ids){Calls.Add(action);if(action=="preview")return Task.FromResult(new SetupResult(PreviewExit,"preview fixture"));if(action=="install"&&Pending!=null)return Pending.Task;return Task.FromResult(new SetupResult(InstallExit,InstallExit==0?"complete":"RECOVERY INCOMPLETE fixture"));}
+        public IReadOnlyList<EmulatorChoice> Entries=Choices;public bool Installed;public int PreviewExit,InstallExit,RemoveExit;public TaskCompletionSource<SetupResult>? Pending;public List<string> Calls=[];
+        public string Pin=new('A',64);public string? InstalledPin;public string[]? InstalledIds;public List<string[]> CallIds=[];
+        public bool Incomplete,PartialRecord,DiscoverFailsAfterInstall,InstallAttempted;public bool? LeftoverState;
+        public string PackagePin=>Pin;
+        public Task<SetupDiscovery> Discover(string root)=>DiscoverFailsAfterInstall&&InstallAttempted?Task.FromException<SetupDiscovery>(new IOException("discovery fixture failed")):Task.FromResult(new SetupDiscovery(Installed,Installed?[]:Entries,Installed?InstalledPin:null,Installed?InstalledIds:null,Installed?null:LeftoverState));
+        public Task<SetupResult> Run(string action,string root,IReadOnlyList<string> ids)
+        {
+            Calls.Add(action);CallIds.Add(ids.ToArray());
+            if(action=="preview")return Task.FromResult(new SetupResult(PreviewExit,"preview fixture"));
+            if(action is "remove" or "remove-installed"){if(RemoveExit==0){Installed=false;}return Task.FromResult(new SetupResult(RemoveExit,RemoveExit==0?"removed fixture":"RECOVERY INCOMPLETE fixture"));}
+            if(action=="install"&&Pending!=null)return Pending.Task;
+            if(action=="install")InstallAttempted=true;
+            // A failed install either rolls back fully or reports RECOVERY INCOMPLETE; PartialRecord keeps its record.
+            if(action=="install"&&(InstallExit==0||PartialRecord)){Installed=true;InstalledPin=Pin;InstalledIds=ids.ToArray();}
+            bool incomplete=Incomplete||InstallExit==5;
+            return Task.FromResult(new SetupResult(InstallExit,InstallExit==0?"complete":incomplete?"install failed; RECOVERY INCOMPLETE: files and record kept":"install failed; rolled back fixture"));
+        }
     }
 }

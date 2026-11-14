@@ -39,6 +39,7 @@ ENTRIES = [  # (emulator ID, emulator folder relative to the LaunchBox root, ori
 ]
 SHIM_EXE = "ControllerLobby.Shim.exe"
 pre_redirect_check = None
+extra_cleanup = None  # optional (root, folders) -> kept paths, run by remove before folder cleanup
 ALLOWED_GEN_PATHS = None
 # Offline checks only. Unset in real use.
 TEST_FAIL_AT = os.environ.get("SHIM_INSTALL_TEST_FAIL_AT", "")  # "<step>" raises; "kill:<step>" ends the process
@@ -612,6 +613,10 @@ def remove(receipt, record, root, rollback=False):
                     os.remove(es)
                 else:
                     kept.append(es)
+    # Launch copies: generated files and empty folders left after the planned files are gone (bigbox_install).
+    copy_kept = extra_cleanup(root, [folder for _, folder, _ in ENTRIES]) if extra_cleanup is not None else []
+    if copy_kept:
+        append(record, "# kept in launch copy (not created by this install): " + "; ".join(copy_kept))
     for _, folder, _ in ENTRIES:
         for sub in ("ControllerLobby\\lobby", "ControllerLobby", "ControllerLobby.BigBox"):
             d = os.path.join(root, folder, sub)

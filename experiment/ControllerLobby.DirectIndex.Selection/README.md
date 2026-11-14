@@ -1,6 +1,6 @@
 # Direct-index selection candidate
 
-Shared selection logic retained as a runtime dependency of the normal Beta host.
+Shared selection logic retained as a runtime dependency of the normal host.
 
 This standalone, single-threaded model has no production caller. It uses existing
 XInput indices 0-3 without compaction, virtual outputs, hiding or routing. The
